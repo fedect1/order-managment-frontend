@@ -1,6 +1,9 @@
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+
 import { Menu, Search } from "lucide-react"
+
+import { SidebarRoutes } from "../SidebarRoutes"
 
 
 export function Navbar() {
@@ -12,7 +15,7 @@ export function Navbar() {
                     <Menu/>
                 </SheetTrigger>
                 <SheetContent>
-                    <p>Sidebar routes</p>
+                    <SidebarRoutes/>
                 </SheetContent>
             </Sheet>    
         </div>
