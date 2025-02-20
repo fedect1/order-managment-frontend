@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Noto_Sans_Display } from "next/font/google";
 import "./globals.css";
 
+import { ThemeProvider } from "@/components/theme-provider"
+
 const noto = Noto_Sans_Display({
   subsets: ["latin"],
 });
@@ -22,7 +24,14 @@ export default function RootLayout({
       <body
         className={`${noto.className} antialiased`}
       >
+      <ThemeProvider
+        attribute="class"
+        enableSystem
+        defaultTheme="light"
+        disableTransitionOnChange
+      >
         {children}
+      </ThemeProvider>
       </body>
     </html>
   );

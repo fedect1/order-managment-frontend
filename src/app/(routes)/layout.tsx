@@ -1,3 +1,5 @@
+import { Toaster } from "@/components/ui/toaster"
+
 import { Navbar } from "@/components/Navbar";
 import { Sidebar } from "@/components/Sidebar";
 
@@ -11,6 +13,7 @@ export default function LayoutDashboard({ children }: { children: React.ReactEle
             <Navbar/>
             <div className="p-6 bg-[#fafbfc] dark:bg-secondary">
                 {children}
+                <Toaster />
             </div>
         </div>
     </div>

@@ -17,7 +17,7 @@ export const dataGeneralSidebar = [
     {
         icon: Building2,
         label: "List of orders",
-        href: "/order-list"
+        href: "/orders"
     },
     {
         icon: Calendar,

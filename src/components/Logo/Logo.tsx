@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 export function Logo() {
     const router = useRouter()
   return (
-    <div className="min-h-20 h-20 flex items-center border-r cursor-pointer gap-2 p-3" onClick={()=>router.push("/")}>
+    <div className="min-h-20 h-20 flex items-center border-b cursor-pointer gap-2 p-3" onClick={()=>router.push("/")}>
 
         <Image src="/logo.png" alt="Logo" width={30} height={30} priority/>
 
