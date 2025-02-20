@@ -1,0 +1,125 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model t_av_article {
+  ARTICLE_ARTICLE Int     @id @default(autoincrement()) @db.UnsignedInt
+  ARTICLE_AVID    String? @db.VarChar(20)
+  ARTICLE_SYSTEM  Int     @db.UnsignedInt
+  ARTICLE_CODE    Int     @db.UnsignedInt
+  ARTICLE_VALUE   Float?  @db.Float
+}
+
+model t_av_data {
+  DATA_ORDER Int    @db.UnsignedInt
+  DATA_CODE  Int    @db.UnsignedInt
+  DATA_VALUE Float? @db.Float
+
+  @@unique([DATA_ORDER, DATA_CODE], map: "DATA_INDEX")
+}
+
+model t_av_order {
+  ORDER_ORDER    Int       @id @default(autoincrement()) @db.UnsignedInt
+  ORDER_AVID     String?   @db.VarChar(20)
+  ORDER_POSITION Int?      @default(0) @db.UnsignedTinyInt
+  ORDER_ARTICLE  String?   @db.VarChar(20)
+  ORDER_RECIPE   String?   @db.VarChar(20)
+  ORDER_SYSTEM   Int       @db.UnsignedInt
+  ORDER_EXTRUDER String?   @db.VarChar(10)
+  ORDER_DATETIME DateTime? @db.DateTime(0)
+  ORDER_STATUS   Int       @db.TinyInt
+}
+
+model t_av_recipe {
+  RECIPE_RECIPE          Int      @id @default(autoincrement()) @db.UnsignedInt
+  RECIPE_REZPNR_UNI      String?  @db.VarChar(20)
+  RECIPE_SCHICHT         String?  @db.VarChar(4)
+  RECIPE_SCHICHT_ANTEIL  Decimal? @db.Decimal(6, 2)
+  RECIPE_REZPNR_MAT      String?  @db.VarChar(20)
+  RECIPE_COMPONENT       Int?     @default(0) @db.UnsignedTinyInt
+  RECIPE_MATERIAL        String?  @db.VarChar(25)
+  RECIPE_MATERIAL_ID     String?  @db.VarChar(10)
+  RECIPE_DICHTE          Decimal? @db.Decimal(6, 3)
+  RECIPE_MATERIAL_ANTEIL Decimal? @db.Decimal(6, 2)
+  RECIPE_ROHSTOFF        String?  @db.Text
+}
+
+model t_charge {
+  CHARGE_CHARGE Int    @id
+  CHARGE_SHORT  String @unique(map: "IDX_CHARGE_SHORT") @db.VarChar(20)
+}
+
+model t_line {
+  LINE_LINE     Int    @id @default(autoincrement()) @db.MediumInt
+  LINE_ID       Int    @unique(map: "IDX_ID_LINE") @db.MediumInt
+  LINE_NAME     String @db.VarChar(30)
+  LINE_SHORT    String @default("Mxx") @db.VarChar(10)
+  LINE_TYPE     Int    @default(0) @db.MediumInt
+  LINE_STANDORT Int    @default(0) @db.MediumInt
+  LINE_GROUP    Int    @default(0) @db.MediumInt
+  LINE_NEXT     Int    @default(1) @db.MediumInt
+  LINE_NDOS     Int    @default(0) @db.MediumInt
+  LINE_COLOUR   BigInt @default(0)
+  LINE_MINTPT   Float  @default(50)
+  LINE_MAXTPT   Float  @default(150)
+  LINE_MAXABV   Float  @default(100)
+  LINE_MINWID   Float  @default(800)
+  LINE_MAXWID   Float  @default(1800)
+
+  @@index([LINE_GROUP], map: "IDX_LINE_GROUP")
+}
+
+model t_rawcharge {
+  RAWCHARGE_RAWCHARGE Int      @id @default(autoincrement()) @db.UnsignedInt
+  RAWCHARGE_RAWMAT    Int      @db.UnsignedInt
+  RAWCHARGE_RAWITEM   Int      @default(0) @db.UnsignedInt
+  RAWCHARGE_DELIVERER Int?     @db.UnsignedInt
+  RAWCHARGE_CHARGENR  String?  @db.VarChar(20)
+  RAWCHARGE_REMARK    String?  @db.VarChar(50)
+  RAWCHARGE_DATIM     DateTime @db.DateTime(0)
+  RAWCHARGE_AMOUNT    Float    @db.Float
+  RAWCHARGE_ACTAMOUNT Float    @db.Float
+  RAWCHARGE_ATTRIBUTE Int      @db.UnsignedTinyInt
+  RAWCHARGE_STATE     Int      @db.UnsignedTinyInt
+  RAWCHARGE_PARENT    Int      @default(0) @db.UnsignedInt
+}
+
+model t_rawitem {
+  RAWITEM_RAWITEM  Int     @id @default(autoincrement()) @db.UnsignedInt
+  RAWITEM_RAWMAT   Int     @db.UnsignedInt
+  RAWITEM_PRODUCER Int     @default(0) @db.UnsignedInt
+  RAWITEM_ARTN     String? @db.VarChar(45)
+  RAWITEM_SHORT    String? @db.VarChar(20)
+  RAWITEM_PRICE    Float?  @db.Float
+
+  @@unique([RAWITEM_RAWMAT, RAWITEM_PRODUCER, RAWITEM_SHORT], map: "IDX_RAWITEM")
+}
+
+model t_rawmat {
+  RAWMAT_RAWMAT   Int      @id @default(autoincrement()) @db.UnsignedInt
+  RAWMAT_NAME     String   @default("-") @db.VarChar(45)
+  RAWMAT_SHORT    String?  @unique(map: "IDX_RAWMAT_SHORT") @default("-") @db.VarChar(20)
+  RAWMAT_RAWTYP   Int?     @default(0) @db.UnsignedInt
+  RAWMAT_PRODUCER Int?     @default(0) @db.UnsignedInt
+  RAWMAT_DENSITY  Float    @default(0)
+  RAWMAT_BULKDENS Float    @default(0)
+  RAWMAT_MFIVAL   Float    @default(0)
+  RAWMAT_COLOR    BigInt   @default(0) @db.UnsignedBigInt
+  RAWMAT_VIPIDX   Int?     @db.UnsignedInt
+  RAWMAT_ARTN     String?  @db.VarChar(45)
+  RAWMAT_NOVIP    Boolean? @default(false)
+
+  @@index([RAWMAT_PRODUCER], map: "IDX_RAWMAT_PRODUCER")
+  @@index([RAWMAT_RAWTYP], map: "IDX_RAWMAT_RAWTYP")
+}
+
+model t_rawtyp {
+  RAWTYP_RAWTYP Int     @id @default(autoincrement()) @db.UnsignedSmallInt
+  RAWTYP_SHORT  String  @unique(map: "IDX_RAWTYP_SHORT") @db.VarChar(10)
+  RAWTYP_DESC   String? @db.VarChar(50)
+}
