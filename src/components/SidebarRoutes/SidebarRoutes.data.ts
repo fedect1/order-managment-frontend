@@ -5,7 +5,8 @@ import {
     Settings,
     ShieldCheck,
     CircleHelpIcon,
-    Calendar
+    Calendar,
+    Container
 } from 'lucide-react'
 
 export const dataGeneralSidebar = [
@@ -18,6 +19,11 @@ export const dataGeneralSidebar = [
         icon: Building2,
         label: "List of orders",
         href: "/orders"
+    },
+    {
+        icon: Container,
+        label: "Materials",
+        href: "/materials"
     },
     {
         icon: Calendar,

@@ -1,9 +1,11 @@
-import { CardSummary } from "./components/CardSummary";
-import { BookOpenCheck, UserRound, Waypoints } from "lucide-react";
+// import { CardSummary } from "./components/CardSummary";
+import { BookOpenCheck,  UserRound, Waypoints } from "lucide-react";
 import LastCustomers from "./components/LastCustomers/LastCustomers";
 import SalesDistributors from './components/SalesDistributors/SalesDistributors';
 import { TotalSuscribers } from "./components/TotalSuscribers";
 import { ListIntegrations } from "./components/ListIntegrations";
+import { dataLineSummary } from "./components/LineSummary/LineSummary.data";
+import { LineSummary } from "./components/LineSummary";
 
 
 export const dataCardsSummary = [
@@ -34,7 +36,7 @@ export default function Home() {
   return (
     <div >
       <h2 className="text-2xl mb-4">Dashboard</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-x-20">
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-x-20">
           {
             dataCardsSummary.map(({ icon, total, average, title, tooltipText }) => (
               <CardSummary
@@ -44,6 +46,21 @@ export default function Home() {
               total={total}
               average={average}
               tooltipText={tooltipText}
+              />
+            ))
+          }
+      </div> */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-x-20">
+          {
+            dataLineSummary.map(({ line, color, status, lastOrder, currentOrder, followingOrder  }) => (
+              <LineSummary
+              key={line}
+              line={line}
+              color={color}
+              status={status}
+              lastOrder={lastOrder}
+              currentOrder={currentOrder}
+              followingOrder={followingOrder}
               />
             ))
           }

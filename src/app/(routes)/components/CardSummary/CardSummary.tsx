@@ -6,15 +6,17 @@ import { MoveDownRight, MoveUpRight, TrendingUp } from "lucide-react";
 
 export function CardSummary(props: CardSummaryProps)  {
     const {average, icon: Icon, title, tooltipText, total} = props
+    const color = { backgroundColor: "#777777" };
   return (
     <div className="shadow-sm bg-background rounded-lg p-5 py-3">
         <div className="flex justify-between">
             <div className="flex gap-2 items-center">
+                <div className={`w-7 h-7 rounded-lg`} style={color}></div>
                 <CustomIcon icon={Icon}/>
                 {title}    
                 <CustomTooltip content={tooltipText}/>
             </div>
-            <div className="flex gap-4 mt-2 md:mt-4">
+            <div className="flex gap-4 items-center">
                 <p className="text-2xl">
                     {total}
                 </p>
