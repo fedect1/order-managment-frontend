@@ -1,6 +1,8 @@
 "use client"
 
-import { z } from "zod"
+import { z } from "zod";
+
+import axios from "axios";
 
 const densitySchema = z.preprocess((val) => {
     if (typeof val === "string") return parseFloat(val)
@@ -11,14 +13,14 @@ const densitySchema = z.preprocess((val) => {
 )
 
 const formSchema = z.object({
-  code: z.string(),
-  nameMat: z.string().min(2),
-  densityGCcm: densitySchema,
-  mfi: densitySchema,
-  densityBulk: densitySchema,
-  type: z.string().min(6),
-  article: z.string().min(6),
-  color: z.string().min(6),
+  RAWMAT_NAME: z.string(),
+  RAWMAT_SHORT: z.string().min(2),
+  RAWMAT_DENSITY: densitySchema,
+  RAWMAT_MFIVAL: densitySchema,
+  RAWMAT_BULKDENS: densitySchema,
+  RAWMAT_RAWTYP: z.number().min(1),
+  RAWMAT_ARTN: z.string().min(6),
+  RAWMAT_COLOR: z.number().min(5),
 });
 
 
@@ -37,6 +39,9 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FormCreateMaterialProps } from "./FormCreateMaterial.interface"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { toast } from "@/hooks/use-toast";
+import { useRouter } from 'next/navigation';
+
 
 const colorOptions = [
     { value: "red", label: "Red", hex: "#FF0000" },
@@ -50,17 +55,19 @@ const colorOptions = [
 export function FormCreateMaterial(props: FormCreateMaterialProps) {
     const { setOpenModalCreate } = props
 
+    const router = useRouter()
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            code: "",
-            nameMat: "",
-            densityGCcm: 0,
-            mfi: 0,
-            densityBulk: 0,
-            type: "",
-            article: "",
-            color: "",
+            RAWMAT_NAME: "",
+            RAWMAT_SHORT: "",
+            RAWMAT_DENSITY: 0,
+            RAWMAT_MFIVAL: 0,
+            RAWMAT_BULKDENS: 0,
+            RAWMAT_RAWTYP: 0,
+            RAWMAT_ARTN: "",
+            RAWMAT_COLOR: 0,
         },
         mode: "onChange",
     })
@@ -68,7 +75,17 @@ export function FormCreateMaterial(props: FormCreateMaterialProps) {
     const { isValid } = form.formState
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        console.log(values)
+        try {
+            await axios.post("/api/material", values)
+            toast({title: "Material created"})
+            router.refresh()
+            setOpenModalCreate(false)
+        } catch (error) {
+            toast({
+                title: "Something went wrong",
+                variant: "destructive"
+            })
+        }
         setOpenModalCreate(false)
     }
 
@@ -78,7 +95,7 @@ export function FormCreateMaterial(props: FormCreateMaterialProps) {
         <div className="grid grid-cols-2 gap-2">
             <FormField
             control={form.control}
-            name="code"
+            name="RAWMAT_NAME"
             render={({ field }) => (
                 <FormItem>
                 <FormLabel>Code</FormLabel>
@@ -91,7 +108,7 @@ export function FormCreateMaterial(props: FormCreateMaterialProps) {
             />
             <FormField
             control={form.control}
-            name="nameMat"
+            name="RAWMAT_SHORT"
             render={({ field }) => (
                 <FormItem>
                 <FormLabel>Material</FormLabel>
@@ -104,7 +121,7 @@ export function FormCreateMaterial(props: FormCreateMaterialProps) {
             />
             <FormField
             control={form.control}
-            name="densityGCcm"
+            name="RAWMAT_DENSITY"
             render={({ field }) => (
                 <FormItem>
                 <FormLabel>Density g/ccm</FormLabel>
@@ -117,7 +134,7 @@ export function FormCreateMaterial(props: FormCreateMaterialProps) {
             />
             <FormField
             control={form.control}
-            name="mfi"
+            name="RAWMAT_MFIVAL"
             render={({ field }) => (
                 <FormItem>
                 <FormLabel>MFI g/10 min</FormLabel>
@@ -130,7 +147,7 @@ export function FormCreateMaterial(props: FormCreateMaterialProps) {
             />
             <FormField
             control={form.control}
-            name="densityBulk"
+            name="RAWMAT_BULKDENS"
             render={({ field }) => (
                 <FormItem>
                 <FormLabel>Density Bulk</FormLabel>
@@ -142,39 +159,34 @@ export function FormCreateMaterial(props: FormCreateMaterialProps) {
             )}
             />
             <FormField
-            control={form.control}
-            name="type"
-            render={({ field }) => (
-                <FormItem>
-                <FormLabel>Type</FormLabel>
-                <Select
-                onValueChange={field.onChange}
-                defaultValue={field.value}
-                >
-                    <FormControl>
+                control={form.control}
+                name="RAWMAT_RAWTYP"
+                render={({ field }) => (
+                    <FormItem>
+                    <FormLabel>Type</FormLabel>
+                    <Select
+                        onValueChange={(value: string) => field.onChange(Number(value))}
+                        defaultValue={String(field.value)}
+                    >
+                        <FormControl>
                         <SelectTrigger>
-                            <SelectValue placeholder="Select the type"/>
+                            <SelectValue placeholder="Select the type" />
                         </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                        <SelectItem value="PE_BD">
-                            PE_BD
-                        </SelectItem>
-                        <SelectItem value="HDPE">
-                            HDPE
-                        </SelectItem>
-                        <SelectItem value="RCY">
-                            RCY
-                        </SelectItem>
-                    </SelectContent>
-                </Select>
-                <FormMessage />
-                </FormItem>
-            )}
+                        </FormControl>
+                        <SelectContent>
+                        <SelectItem value="1">PE_BD</SelectItem>
+                        <SelectItem value="2">HDPE</SelectItem>
+                        <SelectItem value="3">RCY</SelectItem>
+                        </SelectContent>
+                    </Select>
+                    <FormMessage />
+                    </FormItem>
+                )}
             />
+
             <FormField
             control={form.control}
-            name="article"
+            name="RAWMAT_ARTN"
             render={({ field }) => (
                 <FormItem>
                 <FormLabel>Article</FormLabel>
@@ -187,13 +199,13 @@ export function FormCreateMaterial(props: FormCreateMaterialProps) {
             />
             <FormField
             control={form.control}
-            name="color"
+            name="RAWMAT_COLOR"
             render={({ field }) => (
-            <FormItem>
+                <FormItem>
                 <FormLabel>Color</FormLabel>
                 <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
+                    onValueChange={(value: string) => field.onChange(Number(value))}
+                    defaultValue={String(field.value)}
                 >
                     <FormControl>
                     <SelectTrigger>
@@ -201,23 +213,28 @@ export function FormCreateMaterial(props: FormCreateMaterialProps) {
                     </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                    {colorOptions.map((color) => (
-                        <SelectItem key={color.value} value={color.value}>
-                        <div className="flex items-center space-x-2">
+                    {colorOptions.map((color) => {
+                        // Convertir el valor hexadecimal (ej: "#FF0000") a número
+                        const numericHex = parseInt(color.hex.replace('#', ''), 16)
+                        return (
+                        <SelectItem key={color.value} value={String(numericHex)}>
+                            <div className="flex items-center space-x-2">
                             <div
-                            className="w-4 h-4 rounded-full"
-                            style={{ backgroundColor: color.hex }}
+                                className="w-4 h-4 rounded-full"
+                                style={{ backgroundColor: color.hex }}
                             />
                             <span>{color.label}</span>
-                        </div>
+                            </div>
                         </SelectItem>
-                    ))}
+                        )
+                    })}
                     </SelectContent>
                 </Select>
                 <FormMessage />
-            </FormItem>
+                </FormItem>
             )}
-        />
+            />
+
         </div>
         <Button type="submit" disabled={!isValid}>Submit</Button>
       </form>
