@@ -87,6 +87,8 @@ model t_rawcharge {
   RAWCHARGE_ATTRIBUTE Int      @db.UnsignedTinyInt
   RAWCHARGE_STATE     Int      @db.UnsignedTinyInt
   RAWCHARGE_PARENT    Int      @default(0) @db.UnsignedInt
+
+  silos t_silo[]
 }
 
 model t_rawitem {
@@ -122,4 +124,14 @@ model t_rawtyp {
   RAWTYP_RAWTYP Int     @id @default(autoincrement()) @db.UnsignedSmallInt
   RAWTYP_SHORT  String  @unique(map: "IDX_RAWTYP_SHORT") @db.VarChar(10)
   RAWTYP_DESC   String? @db.VarChar(50)
+}
+
+model t_silo {
+  SILO_SILO     Int    @id @default(autoincrement())
+  SILO_NAME     String
+  SILO_QUANTITY Int
+  SILO_CHARGE   Int
+
+  // Relación con t_rawcharge:
+  rawcharge t_rawcharge @relation(fields: [SILO_CHARGE], references: [RAWCHARGE_RAWCHARGE])
 }

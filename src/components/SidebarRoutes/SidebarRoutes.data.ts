@@ -26,6 +26,11 @@ export const dataGeneralSidebar = [
         href: "/materials"
     },
     {
+        icon: Container,
+        label: "Charge Assignment",
+        href: "/charges"
+    },
+    {
         icon: Calendar,
         label: "Calendar",
         href: "/task"
