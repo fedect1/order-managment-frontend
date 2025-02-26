@@ -2,57 +2,37 @@
 
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { t_rawmat } from "@prisma/client"
+import { t_rawtyp } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, MoreHorizontal, Pencil } from "lucide-react"
 import Link from "next/link"
 
 
-export const columns: ColumnDef<t_rawmat>[] = [
+export const columns: ColumnDef<t_rawtyp>[] = [
     {
-        accessorKey: "RAWMAT_COLOR",
-        header: "Color"
-    },
-    {
-        accessorKey: "RAWMAT_RAWMAT",
+        accessorKey: "RAWTYP_RAWTYP",
         header: ({ column }) => {
             return (
                 <Button variant="ghost" className="m-0 p-0 flex items-center" onClick={ () => column.toggleSorting(column.getIsSorted()==="desc")}>
                     Key
-                    <ArrowUpDown className="w-4 h-4 ml-2"/>
+                    <ArrowUpDown className="w-4 h-4"/>
                 </Button>
             )
         }
     },
     {
-        accessorKey: "RAWMAT_NAME",
+        accessorKey: "RAWTYP_SHORT",
         header: "Name"
     },
     {
-        accessorKey: "RAWMAT_DENSITY",
-        header: "Density gcm"
-    },
-    {
-        accessorKey: "RAWMAT_MFIVAL",
-        header: "MFI"
-    },
-    {
-        accessorKey: "RAWMAT_BULKDENS",
-        header: "Bulk Density"
-    },
-    {
-        accessorKey: "RAWMAT_RAWTYP",
-        header: "Type"
-    },
-    {
-        accessorKey: "RAWMAT_ARTN",
-        header: "Article"
+        accessorKey: "RAWTYP_DESC",
+        header: "Description"
     },
     {
         id: "actions",
         header: "Actions",
         cell: ({ row }) => {
-            const { RAWMAT_RAWMAT } = row.original
+            const { RAWTYP_RAWTYP } = row.original
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -61,7 +41,7 @@ export const columns: ColumnDef<t_rawmat>[] = [
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                        <Link href={`/materials/${RAWMAT_RAWMAT}`}>
+                        <Link href={`/materials/type/${RAWTYP_RAWTYP}`}>
                             <DropdownMenuItem>
                                 <Pencil className="w-4 h-4 mr-2"/>
                                 Edit

@@ -4,7 +4,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function PATCH(req: NextRequest, { params }: { params: { materialId: string } | Promise<{ materialId: string }> }) {
     try {
-        console.log("Entra")
         const { materialId } = await params;
 
         const materialIdInt = parseInt(materialId, 10)

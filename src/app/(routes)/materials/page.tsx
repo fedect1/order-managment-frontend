@@ -1,6 +1,7 @@
 import { HeaderMaterial } from "./components/HeaderMaterial";
 import { HeaderType } from "./components/HeaderType";
 import { ListMaterials } from "./components/ListMaterials";
+import { ListTypes } from "./components/ListTypes";
 
 export default function MaterialsPage() {
   return (
@@ -11,6 +12,7 @@ export default function MaterialsPage() {
         </div>
         <div className="lg:col-span-1">
           <HeaderType/>
+          <ListTypes/>
         </div>
     </div>
   )
