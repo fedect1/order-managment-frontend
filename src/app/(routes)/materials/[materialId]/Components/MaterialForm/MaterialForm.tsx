@@ -61,7 +61,7 @@ export function MaterialForm(props: MaterialFormProps) {
     console.log(material.RAWMAT_COLOR)
   return (
     <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-4">
             <div className="grid grid-cols-2 gap-3">
                 <FormField
                     control={form.control}

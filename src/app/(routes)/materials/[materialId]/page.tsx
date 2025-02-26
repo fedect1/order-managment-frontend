@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma"
 import { redirect } from "next/navigation";
 import { Header } from './Components/Header/Header';
 import { MaterialInfo } from "./Components/MaterialInfo";
+import { FooterMaterial } from "./FooterMaterial";
 
 export default async function MaterialIdPage({ params }: { params: { materialId: string } | Promise<{ materialId: string }> }) {
     const { materialId } = await params;
@@ -22,6 +23,7 @@ export default async function MaterialIdPage({ params }: { params: { materialId:
       <div>
         <Header/>
         <MaterialInfo material={material}/>
+        <FooterMaterial materialId={materialIdInt}/>
       </div>
     );
   }

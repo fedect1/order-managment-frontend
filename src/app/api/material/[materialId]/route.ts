@@ -31,3 +31,27 @@ export async function PATCH(req: NextRequest, { params }: { params: { materialId
         return new NextResponse("Internal Error", { status: 500 })
     }}
 
+    export async function DELETE(req: NextRequest, { params }: { params: { materialId: string } | Promise<{ materialId: string }> }) {
+        try {
+            const { materialId } = await params;
+            
+            const materialIdInt = parseInt(materialId, 10)
+
+            const material = await prisma.t_rawmat.delete({
+                where: {
+                    RAWMAT_RAWMAT: materialIdInt
+                }
+            })
+
+            const deletedMaterial = JSON.parse(
+                JSON.stringify(material, (_, value) =>
+                  typeof value === "bigint" ? value.toString() : value
+                )
+            );
+
+            return NextResponse.json(deletedMaterial, { status: 204 })
+        } catch (error) {
+            console.log("MATERIAL ID", error)
+            return new NextResponse("Internal Error", { status: 500 })
+        }
+    }
