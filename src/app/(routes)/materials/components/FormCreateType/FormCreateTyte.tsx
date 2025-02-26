@@ -3,9 +3,8 @@
 import { z } from "zod"
 
 const formSchema = z.object({
-  name: z.string().min(1),
-  description: z.string().min(2),
-  quantity: z.number().min(1)
+  RAWTYP_SHORT: z.string().min(1),
+  RAWTYP_DESC: z.string().min(2),
 });
 
 
@@ -23,18 +22,22 @@ import { Input } from "@/components/ui/input"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FormCreateTypeProps } from "./FormCreateType.interface"
+import axios from "axios";
+import { toast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 
 
 export function FormCreateType(props: FormCreateTypeProps) {
     const { setOpenModalCreate } = props
 
+    const router = useRouter()
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            name: "",
-            description: "",
-            quantity: 0,
+            RAWTYP_SHORT: "",
+            RAWTYP_DESC: "",
         },
         mode: "onChange",
     })
@@ -42,8 +45,18 @@ export function FormCreateType(props: FormCreateTypeProps) {
     const { isValid } = form.formState
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        console.log(values)
+      try {
+        await axios.post("/api/type", values)
+        toast({title: "Material created"})
+        router.refresh()
         setOpenModalCreate(false)
+      } catch (error) {
+        toast({
+            title: "Something went wrong",
+            variant: "destructive"
+        })
+    }
+    setOpenModalCreate(false)
     }
 
   return (
@@ -52,7 +65,7 @@ export function FormCreateType(props: FormCreateTypeProps) {
         <div className="grid grid-cols-2 gap-2">
             <FormField
             control={form.control}
-            name="name"
+            name="RAWTYP_SHORT"
             render={({ field }) => (
                 <FormItem>
                 <FormLabel>Name</FormLabel>
@@ -65,25 +78,12 @@ export function FormCreateType(props: FormCreateTypeProps) {
             />
             <FormField
             control={form.control}
-            name="description"
+            name="RAWTYP_DESC"
             render={({ field }) => (
                 <FormItem>
                 <FormLabel>Description</FormLabel>
                 <FormControl>
                     <Input placeholder="PE High Density" type="text" {...field} />
-                </FormControl>
-                <FormMessage />
-                </FormItem>
-            )}
-            />
-            <FormField
-            control={form.control}
-            name="quantity"
-            render={({ field }) => (
-                <FormItem>
-                <FormLabel>Quantity</FormLabel>
-                <FormControl>
-                    <Input type="number" min={0} {...field} />
                 </FormControl>
                 <FormMessage />
                 </FormItem>
