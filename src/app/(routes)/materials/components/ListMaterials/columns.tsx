@@ -55,7 +55,7 @@ export const columns: ColumnDef<t_rawmat>[] = [
             const { RAWMAT_RAWMAT } = row.original
             return (
                 <DropdownMenu>
-                    <DropdownMenuTrigger>
+                    <DropdownMenuTrigger asChild>
                         <Button variant="ghost" className="w-8 h-4 p-0">
                             <MoreHorizontal className="w-4 h-4"/>
                         </Button>
