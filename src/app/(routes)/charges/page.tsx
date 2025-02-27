@@ -11,7 +11,7 @@ export default function ChargesPage() {
           <HeaderSilo/>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-x-20">
                 {
-                    dataSiloSummary.map(({ SILO_SILO, SILO_NAME, SILO_QUANTITY, SILO_CHARGE, SILO_CAPACITY, SILO_CATEGORY  }) => (
+                    dataSiloSummary.map(({ SILO_SILO, SILO_NAME, SILO_QUANTITY, SILO_CHARGE, SILO_CAPACITY, RAWMAT_NAME, RAWMAT_RAWTYP  }) => (
                     <SiloSummary
                     key={SILO_SILO}
                     SILO_SILO={SILO_SILO}
@@ -19,7 +19,8 @@ export default function ChargesPage() {
                     SILO_QUANTITY={SILO_QUANTITY}
                     SILO_CHARGE={SILO_CHARGE}
                     SILO_CAPACITY={SILO_CAPACITY}
-                    SILO_CATEGORY={SILO_CATEGORY}
+                    RAWMAT_NAME={RAWMAT_NAME}
+                    RAWMAT_RAWTYP={RAWMAT_RAWTYP}
                     />
                     ))
                 }

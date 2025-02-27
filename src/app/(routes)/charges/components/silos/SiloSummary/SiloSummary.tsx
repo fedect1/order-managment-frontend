@@ -5,18 +5,13 @@ import { Percent } from 'lucide-react';
 
 
 export function SiloSummary(props: SiloSummaryProps)  {
-    const { SILO_NAME, SILO_QUANTITY, SILO_CHARGE, SILO_CAPACITY, SILO_CATEGORY } = props
+    const { SILO_NAME, SILO_QUANTITY, SILO_CHARGE, SILO_CAPACITY, RAWMAT_NAME, RAWMAT_RAWTYP } = props
     const perc =  SILO_QUANTITY / SILO_CAPACITY * 100
   return (
     <div className="shadow-sm bg-background rounded-lg p-5 py-3">
         <div className="flex justify-between py-3 border-b">
             <div className="flex gap-2 items-center">
                 {SILO_NAME}    
-            </div>
-            <div className="flex gap-4 items-center">
-                <p className="text-2xl">
-                    {SILO_QUANTITY}
-                </p>
             </div>
         </div>
         <div className="">
@@ -29,14 +24,17 @@ export function SiloSummary(props: SiloSummaryProps)  {
                 <Percent strokeWidth={1} className="w-4 h-4" />
             </div>
         </div>
-
             <div className="flex justify-between py-3 border-b">
-                <p>Current Order</p>
-                <p>{SILO_CAPACITY}</p>
+                <p>Charge</p>
+                <p>{SILO_CHARGE}</p>
             </div>
             <div className="flex justify-between py-3 border-b">
-                <p>Following Order</p>
-                <p>{SILO_CATEGORY}</p>
+                <p>Raw material Types</p>
+                <p>{RAWMAT_NAME}</p>
+            </div>
+            <div className="flex justify-between py-3 border-b">
+                <p>Raw material Name</p>
+                <p>{RAWMAT_RAWTYP}</p>
             </div>
         </div>
     </div>

@@ -5,7 +5,8 @@ export const dataSiloSummary = [
         SILO_QUANTITY: 4500,
         SILO_CHARGE: "ARG-01",
         SILO_CAPACITY: 5000,
-        SILO_CATEGORY: "silo"
+        RAWMAT_NAME: "PR1",
+        RAWMAT_RAWTYP: "Recicle"
     },
     {
         SILO_SILO: 2,
@@ -13,7 +14,8 @@ export const dataSiloSummary = [
         SILO_QUANTITY: 4500,
         SILO_CHARGE: "ARG-02",
         SILO_CAPACITY: 5000,
-        SILO_CATEGORY: "silo"
+        RAWMAT_NAME: "PR2",
+        RAWMAT_RAWTYP: "Recicle"
     },
     {
         SILO_SILO: 3,
@@ -21,7 +23,8 @@ export const dataSiloSummary = [
         SILO_QUANTITY: 4500,
         SILO_CHARGE: "ARG-03",
         SILO_CAPACITY: 5000,
-        SILO_CATEGORY: "silo"
+        RAWMAT_NAME: "PR3",
+        RAWMAT_RAWTYP: "Recicle"
     },
     {
         SILO_SILO: 4,
@@ -29,7 +32,8 @@ export const dataSiloSummary = [
         SILO_QUANTITY: 4500,
         SILO_CHARGE: "ARG-04",
         SILO_CAPACITY: 5000,
-        SILO_CATEGORY: "silo"
+        RAWMAT_NAME: "PR4",
+        RAWMAT_RAWTYP: "Recicle"
     },
     {
         SILO_SILO: 5,
@@ -37,7 +41,8 @@ export const dataSiloSummary = [
         SILO_QUANTITY: 4500,
         SILO_CHARGE: "5",
         SILO_CAPACITY: 5000,
-        SILO_CATEGORY: "silo"
+        RAWMAT_NAME: "PR5",
+        RAWMAT_RAWTYP: "Recicle"
     },
     {
         SILO_SILO: 6,
@@ -45,7 +50,8 @@ export const dataSiloSummary = [
         SILO_QUANTITY: 4500,
         SILO_CHARGE: "ARG-06",
         SILO_CAPACITY: 5000,
-        SILO_CATEGORY: "silo"
+        RAWMAT_NAME: "PR6",
+        RAWMAT_RAWTYP: "Recicle"
     },
 
 ]
