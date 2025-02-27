@@ -127,11 +127,14 @@ model t_rawtyp {
 }
 
 model t_silo {
-  SILO_SILO     Int    @id @default(autoincrement())
+  SILO_SILO     Int      @id @default(autoincrement())
   SILO_NAME     String
   SILO_QUANTITY Int
-  SILO_CHARGE   Int
+  SILO_CHARGE   Int      @db.UnsignedInt
+  SILO_CAPACITY Decimal  @db.Decimal(6,2)
+  SILO_CATEGORY String
 
-  // Relación con t_rawcharge:
   rawcharge t_rawcharge @relation(fields: [SILO_CHARGE], references: [RAWCHARGE_RAWCHARGE])
 }
+
+
