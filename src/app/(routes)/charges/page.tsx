@@ -7,10 +7,10 @@ import { ListCharges } from "./components/charges/ListCharges";
 
 export default function ChargesPage() {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-6 gap-3 lg:gap-x-5"> 
+    <div className="grid grid-cols-1 lg:grid-cols-6 gap-1 lg:gap-x-5"> 
         <div className="lg:col-span-3 pr-2 lg:border-r lg:border-gray-300">
           <HeaderSilo/>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-x-20">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 lg:gap-x-3">
                 {
                     dataSiloSummary.map(({ SILO_SILO, SILO_NAME, SILO_QUANTITY, SILO_CHARGE, SILO_CAPACITY, RAWMAT_NAME, RAWMAT_RAWTYP  }) => (
                     <SiloSummary
