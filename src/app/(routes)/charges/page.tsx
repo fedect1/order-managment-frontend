@@ -2,12 +2,13 @@ import { HeaderCharge } from "./components/charges";
 import { SiloSummary } from "./components/silos/SiloSummary";
 import { dataSiloSummary } from "./components/silos/SiloSummary/SiloSummary.data";
 import { HeaderSilo } from "./components/silos";
+import { ListCharges } from "./components/charges/ListCharges";
 
 
 export default function ChargesPage() {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 lg:gap-x-10"> 
-        <div className="lg:col-span-2 pr-2 lg:border-r lg:border-gray-300">
+    <div className="grid grid-cols-1 lg:grid-cols-6 gap-3 lg:gap-x-5"> 
+        <div className="lg:col-span-3 pr-2 lg:border-r lg:border-gray-300">
           <HeaderSilo/>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-x-20">
                 {
@@ -26,8 +27,9 @@ export default function ChargesPage() {
                 }
             </div>
         </div>
-        <div className="lg:col-span-1">
+        <div className="lg:col-span-3">
           <HeaderCharge/>
+          <ListCharges/>
         </div>
     </div>
   )
