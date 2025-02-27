@@ -4,12 +4,13 @@ import { z } from "zod";
 import axios from "axios";
 
 const formSchema = z.object({
-  RAWMAT_NAME: z.string(),
-  RAWMAT_SHORT: z.string().min(2),
-  RAWMAT_RAWTYP: z.number().min(1),
-  RAWMAT_ARTN: z.string().min(6),
-  RAWMAT_COLOR: z.number().min(5),
+  RAWCHARGE_RAWMAT: z.preprocess((val) => Number(val), z.number()),
+  RAWCHARGE_CHARGENR: z.string().min(2),
+  RAWCHARGE_AMOUNT: z.preprocess((val) => Number(val), z.number().min(1)),
+  RAWCHARGE_ACTAMOUNT: z.preprocess((val) => Number(val), z.number().min(1)),
+  RAWCHARGE_STATE: z.preprocess((val) => Number(val), z.number().min(1)),
 });
+
 
 import { Button } from "@/components/ui/button";
 import {
@@ -46,11 +47,11 @@ export function FormCreateCharge({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      RAWMAT_NAME: "",
-      RAWMAT_SHORT: "",
-      RAWMAT_RAWTYP: 0,
-      RAWMAT_ARTN: "",
-      RAWMAT_COLOR: 0,
+      RAWCHARGE_RAWMAT: 0,
+      RAWCHARGE_CHARGENR: "",
+      RAWCHARGE_AMOUNT: 0,
+      RAWCHARGE_ACTAMOUNT: 0,
+      RAWCHARGE_STATE: 0,
     },
     mode: "onChange",
   });
@@ -59,7 +60,7 @@ export function FormCreateCharge({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.post("/api/material", values);
+      await axios.post("/api/charge", values);
       toast({ title: "Material created" });
       router.refresh();
       setOpenModalCreate(false);
@@ -79,10 +80,10 @@ export function FormCreateCharge({
         <div className="grid grid-cols-2 gap-2">
           <FormField
             control={form.control}
-            name="RAWMAT_NAME"
+            name="RAWCHARGE_CHARGENR"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Code</FormLabel>
+                <FormLabel>Charge</FormLabel>
                 <FormControl>
                   <Input placeholder="Polycol..." type="text" {...field} />
                 </FormControl>
@@ -92,12 +93,15 @@ export function FormCreateCharge({
           />
           <FormField
             control={form.control}
-            name="RAWMAT_SHORT"
+            name="RAWCHARGE_AMOUNT"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Material</FormLabel>
+                <FormLabel>Amount</FormLabel>
                 <FormControl>
-                  <Input placeholder="B.D. POLYAIR BIANC..." type="text" {...field} />
+                  <Input
+                    placeholder="Enter amount..."
+                    type="number"
+                    {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -105,37 +109,12 @@ export function FormCreateCharge({
           />
           <FormField
             control={form.control}
-            name="RAWMAT_RAWTYP"
+            name="RAWCHARGE_ACTAMOUNT"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Type</FormLabel>
-                <Select
-                  onValueChange={(value: string) => field.onChange(Number(value))}
-                  defaultValue={String(field.value)}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select the type" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="1">PE_BD</SelectItem>
-                    <SelectItem value="2">HDPE</SelectItem>
-                    <SelectItem value="3">RCY</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="RAWMAT_ARTN"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Article</FormLabel>
+                <FormLabel>Actual Amount</FormLabel>
                 <FormControl>
-                  <Input placeholder="POLYAIR..." type="text" {...field} />
+                  <Input placeholder="Actual amount..." type="number" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -143,77 +122,48 @@ export function FormCreateCharge({
           />
           <FormField
             control={form.control}
-            name="RAWMAT_RAWTYP"
+            name="RAWCHARGE_STATE"
             render={({ field }) => (
-                <FormItem>
-                <FormLabel>Material</FormLabel>
-                <Select
-                    onValueChange={(value: string) => field.onChange(Number(value))}
-                    defaultValue={String(field.value)}
-                >
-                    <FormControl>
-                    <SelectTrigger>
-                        <SelectValue placeholder="Selecciona el material" />
-                    </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                    {materials.map((material) => (
-                        <SelectItem
-                        key={material.RAWMAT_RAWMAT}
-                        value={String(material.RAWMAT_RAWMAT)}
-                        >
-                        {material.RAWMAT_NAME} - {material.RAWMAT_COLOR.toString()} - {material.RAWMAT_DENSITY}
-                        </SelectItem>
-                    ))}
-                    </SelectContent>
-                </Select>
+              <FormItem>
+                <FormLabel>State</FormLabel>
+                <FormControl>
+                  <Input placeholder="Actual amount..." type="number" {...field} />
+                </FormControl>
                 <FormMessage />
-                </FormItem>
+              </FormItem>
             )}
-            />
+          />
+          <FormField
+          control={form.control}
+          name="RAWCHARGE_RAWMAT"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Material</FormLabel>
+              <Select
+                onValueChange={(value: string) => field.onChange(Number(value))}
+                defaultValue={String(field.value)}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecciona el material" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {materials.map((material) => (
+                    <SelectItem
+                      key={material.RAWMAT_RAWMAT}
+                      value={String(material.RAWMAT_RAWMAT)}
+                    >
+                      {material.RAWMAT_NAME} - {material.RAWMAT_COLOR.toString()} - {material.RAWMAT_DENSITY}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-          <FormField
-            control={form.control}
-            name="RAWMAT_COLOR"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Color</FormLabel>
-                <Select
-                  onValueChange={(value: string) => field.onChange(Number(value))}
-                  defaultValue={String(field.value)}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a color" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {[
-                      { value: "red", label: "Red", hex: "#FF0000" },
-                      { value: "blue", label: "Blue", hex: "#0000FF" },
-                      { value: "green", label: "Green", hex: "#00FF00" },
-                      { value: "yellow", label: "Yellow", hex: "#FFFF00" },
-                      { value: "purple", label: "Purple", hex: "#800080" },
-                    ].map((color) => {
-                      const numericHex = parseInt(color.hex.replace("#", ""), 16);
-                      return (
-                        <SelectItem key={color.value} value={String(numericHex)}>
-                          <div className="flex items-center space-x-2">
-                            <div
-                              className="w-4 h-4 rounded-full"
-                              style={{ backgroundColor: color.hex }}
-                            />
-                            <span>{color.label}</span>
-                          </div>
-                        </SelectItem>
-                      );
-                    })}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
         </div>
         <Button type="submit" disabled={!isValid}>
           Submit
