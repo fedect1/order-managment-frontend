@@ -37,11 +37,6 @@ export const dataGeneralSidebar = [
         label: "Charge Assignment",
         href: "/charges"
     },
-    {
-        icon: Calendar,
-        label: "Calendar",
-        href: "/task"
-    },
 ]
 
 export const dataToolsSidebar = [
@@ -55,17 +50,9 @@ export const dataToolsSidebar = [
         label: "Analytics",
         href: "/analytics"
     },
-]
-
-export const dataSupportSidebar = [
-    // {
-    //     icon: Settings,
-    //     label: "Setting",
-    //     href: "/setting"
-    // },
-    // {
-    //     icon: ShieldCheck,
-    //     label: "Security",
-    //     href: "/security"
-    // },
+    {
+        icon: Calendar,
+        label: "Calendar",
+        href: "/task"
+    },
 ]

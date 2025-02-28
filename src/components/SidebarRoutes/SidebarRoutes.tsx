@@ -2,7 +2,7 @@
 
 import { SidebarItem } from "../SidebarItem"
 import { Separator } from "@/components/ui/separator"
-import { dataGeneralSidebar, dataToolsSidebar, dataSupportSidebar } from "./SidebarRoutes.data"
+import { dataGeneralSidebar, dataToolsSidebar} from "./SidebarRoutes.data"
 import { Button } from "@/components/ui/button"
 export function SidebarRoutes() {
   return (
@@ -26,12 +26,6 @@ export function SidebarRoutes() {
 
             <Separator/>
 
-            <div className="p-2 md:p-6">
-                <p className="text-slate-500 mb-2">Support</p>
-                {dataSupportSidebar.map((item)=>(
-                    <SidebarItem key={item.label} item={item}/>
-                ))}
-            </div>
 
         </div>
         <div>
