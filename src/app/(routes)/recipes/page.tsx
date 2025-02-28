@@ -1,8 +1,9 @@
+import { HeaderRecipes } from "./components/HeaderRecipes";
 
 export default function RecipesPage() {
   return (
     <div>
-        <p>Recipes</p>
+        <HeaderRecipes/>
     </div>
   )
 }
