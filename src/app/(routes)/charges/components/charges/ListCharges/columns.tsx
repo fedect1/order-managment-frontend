@@ -59,7 +59,7 @@ export const columns: ColumnDef<t_rawmat>[] = [
         id: "actions",
         header: "Actions",
         cell: ({ row }) => {
-            const { RAWMAT_RAWMAT } = row.original
+            const { RAWCHARGE_RAWCHARGE } = row.original
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -68,7 +68,7 @@ export const columns: ColumnDef<t_rawmat>[] = [
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                        <Link href={`/materials/${RAWMAT_RAWMAT}`}>
+                        <Link href={`/charges/${RAWCHARGE_RAWCHARGE}`}>
                             <DropdownMenuItem>
                                 <Pencil className="w-4 h-4 mr-2"/>
                                 Edit
