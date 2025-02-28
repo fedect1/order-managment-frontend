@@ -36,73 +36,74 @@ import {
   TableRow,
 } from "@/components/ui/table"
  
-const data: Payment[] = [
+const data: Silo[] = [
   {
     id: "m5gr84i9",
     amount: 316,
-    status: "success",
-    email: "ken99@yahoo.com",
+    silo: "silo 1",
+    charge: "LKC-512",
   },
   {
     id: "3u1reuv4",
-    amount: 242,
-    status: "success",
-    email: "Abe45@gmail.com",
+    amount: 400,
+    silo: "silo 2",
+    charge: "LKC-612",
   },
   {
     id: "derv1ws0",
-    amount: 837,
-    status: "processing",
-    email: "Monserrat44@gmail.com",
+    amount: 250,
+    silo: "silo 3",
+    charge: "LKC-712",
   },
   {
     id: "5kma53ae",
-    amount: 874,
-    status: "success",
-    email: "Silas22@gmail.com",
+    amount: 900,
+    silo: "silo 4",
+    charge: "LKC-812",
   },
   {
     id: "bhqecj4p",
-    amount: 721,
-    status: "failed",
-    email: "carmella@hotmail.com",
+    amount: 300,
+    silo: "silo 5",
+    charge: "LKC-912",
   },
 ]
  
-export type Payment = {
+export type Silo = {
   id: string
   amount: number
-  status: "pending" | "processing" | "success" | "failed"
-  email: string
+  silo: string
+  charge: string
 }
  
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Silo>[] = [
   {
     id: "select",
     enableSorting: false,
     enableHiding: false,
   },
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "silo",
+    header: "silo",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
+      <div className="capitalize">{row.getValue("silo")}</div>
     ),
   },
   {
-    accessorKey: "email",
+    accessorKey: "charge",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="m-0 p-0 flex items-center"
         >
-          Email
+          Charge
           <ArrowUpDown />
         </Button>
       )
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+    cell: ({ row }) => <div className="lowercase">{row.getValue("charge")}</div>,
   },
   {
     accessorKey: "amount",
@@ -111,9 +112,10 @@ export const columns: ColumnDef<Payment>[] = [
       const amount = parseFloat(row.getValue("amount"))
  
       // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
+      const formatted = new Intl.NumberFormat("de-DE", {
+        style: "unit",
+        unit: "kilogram",
+        unitDisplay: "short",
       }).format(amount)
  
       return <div className="text-right font-medium">{formatted}</div>
@@ -183,10 +185,10 @@ export function CustomersTable() {
     <div className="w-full">
     <div className="flex items-center py-4">
       <Input
-        placeholder="Filter emails..."
-        value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+        placeholder="Filter charge..."
+        value={(table.getColumn("charge")?.getFilterValue() as string) ?? ""}
         onChange={(event) =>
-          table.getColumn("email")?.setFilterValue(event.target.value)
+          table.getColumn("charge")?.setFilterValue(event.target.value)
         }
         className="max-w-sm"
       />

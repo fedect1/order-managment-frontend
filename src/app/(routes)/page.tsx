@@ -69,10 +69,10 @@ export default function Home() {
           <LastCustomers/>
           <SalesDistributors/>
       </div>
-      <div className="flex-col xl:flex xl:flex-row md:gap-x-10 gap-y-4 md:gap-y-0 mt-12 md:mb-10 justify-center">
+      {/* <div className="flex-col xl:flex xl:flex-row md:gap-x-10 gap-y-4 md:gap-y-0 mt-12 md:mb-10 justify-center">
         <TotalSuscribers/>
         <ListIntegrations/>
-      </div>
+      </div> */}
     </div>
   );
 }
