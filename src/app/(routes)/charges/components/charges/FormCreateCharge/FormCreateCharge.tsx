@@ -11,7 +11,6 @@ const formSchema = z.object({
   RAWCHARGE_STATE: z.preprocess((val) => Number(val), z.number().min(1)),
 });
 
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -33,16 +32,17 @@ import {
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
-import { FormCreateChargeProps } from "./FormCreateCharge.interface";
-import { DialogChargeProps } from "../DialogCharge/DialogCharge.interface";
+// Importa la interfaz FormCreateChargeProps desde DialogCharge.interface.ts
+import { FormCreateChargeProps } from "../DialogCharge/DialogCharge.interface";
 
+// Usa solo FormCreateChargeProps (que ya incluye materials)
 export function FormCreateCharge({
   setOpenModalCreate,
   materials,
-}: FormCreateChargeProps & { materials: DialogChargeProps }) {
+}: FormCreateChargeProps) {
   const router = useRouter();
 
-  console.log(materials)
+  console.log(materials);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -154,7 +154,7 @@ export function FormCreateCharge({
                       key={material.RAWMAT_RAWMAT}
                       value={String(material.RAWMAT_RAWMAT)}
                     >
-                      {material.RAWMAT_NAME} - {material.RAWMAT_COLOR.toString()} - {material.RAWMAT_DENSITY}
+                      {material.RAWMAT_NAME} - {String(material.RAWMAT_COLOR)} - {material.RAWMAT_DENSITY}
                     </SelectItem>
                   ))}
                 </SelectContent>

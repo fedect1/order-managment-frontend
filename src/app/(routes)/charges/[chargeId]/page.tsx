@@ -1,8 +1,24 @@
 import prisma from "@/lib/prisma"
 import { redirect } from "next/navigation";
 
-export default async function ChargeIdPage({ params }: { params: { chargeId: string } | Promise<{ chargeId: string }> }) {
-    const { chargeId } = await params;
+// Define un tipo más específico para searchParams
+type SearchParams = {
+  [key: string]: string | string[] | undefined
+};
+
+type PageProps = {
+  params?: Promise<{ chargeId: string }>;
+  searchParams?: Promise<SearchParams>;
+};
+
+export default async function ChargeIdPage({ params }: PageProps) {
+    // Si params es undefined, usamos un objeto vacío
+    const resolvedParams = await (params || Promise.resolve({ chargeId: "" }));
+    const { chargeId } = resolvedParams;
+
+    if (!chargeId) {
+        return redirect("/materials");
+    }
 
     const chargeIdInt = parseInt(chargeId, 10)
 
@@ -15,7 +31,9 @@ export default async function ChargeIdPage({ params }: { params: { chargeId: str
     if (!charge) {
         return redirect("/materials")
     }
+    
     console.log(charge)
+    
     return (
       <div>
         <p>{chargeId}</p>
@@ -24,5 +42,4 @@ export default async function ChargeIdPage({ params }: { params: { chargeId: str
         <FooterMaterial materialId={materialIdInt}/> */}
       </div>
     );
-  }
-  
+}

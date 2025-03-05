@@ -1,34 +1,34 @@
 // import { CardSummary } from "./components/CardSummary";
-import { BookOpenCheck,  UserRound, Waypoints } from "lucide-react";
+// import { BookOpenCheck,  UserRound, Waypoints } from "lucide-react";
 import LastCustomers from "./components/LastCustomers/LastCustomers";
 import SalesDistributors from './components/SalesDistributors/SalesDistributors';
 import { dataLineSummary } from "./components/LineSummary/LineSummary.data";
 import { LineSummary } from "./components/LineSummary";
 
 
-export const dataCardsSummary = [
-  {
-    icon: UserRound,
-    total: "12,154",
-    average: 15,
-    title: "Raw material",
-    tooltipText: "See al the materials",
-  },
-  {
-    icon: Waypoints,
-    total: "86.5",
-    average: 80,
-    title: "Production",
-    tooltipText: "See the production",
-  },
-  {
-    icon: BookOpenCheck,
-    total: "363.95",
-    average: 30,
-    title: "Current orders",
-    tooltipText: "See al the Current materials",
-  },
-]
+// export const dataCardsSummary = [
+//   {
+//     icon: UserRound,
+//     total: "12,154",
+//     average: 15,
+//     title: "Raw material",
+//     tooltipText: "See al the materials",
+//   },
+//   {
+//     icon: Waypoints,
+//     total: "86.5",
+//     average: 80,
+//     title: "Production",
+//     tooltipText: "See the production",
+//   },
+//   {
+//     icon: BookOpenCheck,
+//     total: "363.95",
+//     average: 30,
+//     title: "Current orders",
+//     tooltipText: "See al the Current materials",
+//   },
+// ]
 
 export default function Home() {
   return (

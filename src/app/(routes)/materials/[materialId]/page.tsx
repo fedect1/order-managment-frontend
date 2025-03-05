@@ -4,8 +4,24 @@ import { Header } from './Components/Header/Header';
 import { MaterialInfo } from "./Components/MaterialInfo";
 import { FooterMaterial } from "./Components/FooterMaterial";
 
-export default async function MaterialIdPage({ params }: { params: { materialId: string } | Promise<{ materialId: string }> }) {
-    const { materialId } = await params;
+// Define tipos específicos para los parámetros
+type SearchParams = {
+  [key: string]: string | string[] | undefined
+};
+
+type PageProps = {
+  params?: Promise<{ materialId: string }>;
+  searchParams?: Promise<SearchParams>;
+};
+
+export default async function MaterialIdPage({ params }: PageProps) {
+    // Manejo seguro de params que podrían ser undefined
+    const resolvedParams = await (params || Promise.resolve({ materialId: "" }));
+    const { materialId } = resolvedParams;
+
+    if (!materialId) {
+        return redirect("/materials");
+    }
 
     const materialIdInt = parseInt(materialId, 10)
 
@@ -26,5 +42,4 @@ export default async function MaterialIdPage({ params }: { params: { materialId:
         <FooterMaterial materialId={materialIdInt}/>
       </div>
     );
-  }
-  
+}
