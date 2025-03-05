@@ -12,7 +12,6 @@ import {
 
 import { Button } from "@/components/ui/button"
 
-import { CirclePlus } from "lucide-react"
 
 import { useState } from "react"
 import { FormCreateCustomer } from "../FormCreateCustomer"

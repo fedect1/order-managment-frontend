@@ -10,9 +10,7 @@ import {
     getFilteredRowModel,
     useReactTable,
     getPaginationRowModel,
-    onSortingChange,
     getCoreRowModel,
-    setSorting,
     getSortedRowModel,
     flexRender
 } from "@tanstack/react-table"

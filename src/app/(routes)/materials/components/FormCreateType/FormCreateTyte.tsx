@@ -55,6 +55,7 @@ export function FormCreateType(props: FormCreateTypeProps) {
             title: "Something went wrong",
             variant: "destructive"
         })
+        console.log(error)
     }
     setOpenModalCreate(false)
     }

@@ -85,6 +85,7 @@ export function FormCreateMaterial(props: FormCreateMaterialProps) {
                 title: "Something went wrong",
                 variant: "destructive"
             })
+            console.log(error)
         }
         setOpenModalCreate(false)
     }

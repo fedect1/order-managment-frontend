@@ -1,8 +1,5 @@
 import prisma from "@/lib/prisma"
 import { redirect } from "next/navigation";
-import { Header } from './Components/Header/Header';
-import { MaterialInfo } from "./Components/MaterialInfo";
-import { FooterMaterial } from "./Components/FooterMaterial";
 
 export default async function ChargeIdPage({ params }: { params: { chargeId: string } | Promise<{ chargeId: string }> }) {
     const { chargeId } = await params;

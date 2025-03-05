@@ -2,8 +2,6 @@
 import { BookOpenCheck,  UserRound, Waypoints } from "lucide-react";
 import LastCustomers from "./components/LastCustomers/LastCustomers";
 import SalesDistributors from './components/SalesDistributors/SalesDistributors';
-import { TotalSuscribers } from "./components/TotalSuscribers";
-import { ListIntegrations } from "./components/ListIntegrations";
 import { dataLineSummary } from "./components/LineSummary/LineSummary.data";
 import { LineSummary } from "./components/LineSummary";
 
