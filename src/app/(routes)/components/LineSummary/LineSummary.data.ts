@@ -5,7 +5,11 @@ export const dataLineSummary = [
         status: "Good",
         lastOrder: "AC370",
         currentOrder: "AC380",
-        followingOrder: "AC390"
+        followingOrder: "AC390",
+        amountAct:230,
+        amountTgt:229,
+        throughputAct: 500,
+        throughputTgt: 510
     },
     {
         line: "L2",
@@ -13,7 +17,11 @@ export const dataLineSummary = [
         status: "Good",
         lastOrder: "AC370",
         currentOrder: "AC380",
-        followingOrder: "AC390"
+        followingOrder: "AC390",
+        amountAct:230,
+        amountTgt:229,
+        throughputAct: 500,
+        throughputTgt: 510
     },
     {
         line: "L3",
@@ -21,7 +29,11 @@ export const dataLineSummary = [
         status: "Good",
         lastOrder: "AC370",
         currentOrder: "AC380",
-        followingOrder: "AC390"
+        followingOrder: "AC390",
+        amountAct:230,
+        amountTgt:229,
+        throughputAct: 500,
+        throughputTgt: 510
     },
     {
         line: "L4",
@@ -29,7 +41,11 @@ export const dataLineSummary = [
         status: "Stop",
         lastOrder: "AC370",
         currentOrder: "AC380",
-        followingOrder: "AC390"
+        followingOrder: "AC390",
+        amountAct:230,
+        amountTgt:229,
+        throughputAct: 500,
+        throughputTgt: 510
     },
     {
         line: "L5",
@@ -37,7 +53,11 @@ export const dataLineSummary = [
         status: "Good",
         lastOrder: "AC370",
         currentOrder: "AC380",
-        followingOrder: "AC390"
+        followingOrder: "AC390",
+        amountAct:230,
+        amountTgt:229,
+        throughputAct: 500,
+        throughputTgt: 510
     },
     {
         line: "L6",
@@ -45,7 +65,11 @@ export const dataLineSummary = [
         status: "Good",
         lastOrder: "AC370",
         currentOrder: "AC380",
-        followingOrder: "AC390"
+        followingOrder: "AC390",
+        amountAct:230,
+        amountTgt:229,
+        throughputAct: 500,
+        throughputTgt: 510
     },
 
 ]

@@ -12,7 +12,7 @@ import {
 export const dataGeneralSidebar = [
     {
         icon: PanelsTopLeft,
-        label: "Dashboard",
+        label: "Overview",
         href: "/"
     },
     {

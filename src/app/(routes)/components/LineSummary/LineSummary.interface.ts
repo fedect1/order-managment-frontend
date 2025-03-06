@@ -2,8 +2,12 @@
 export interface LineSummaryProps {
     line: string,
     color: string,
-    status: string,
+    status?: string,
     lastOrder: string,
     currentOrder: string,
-    followingOrder: string
+    followingOrder: string,
+    amountAct?:number,
+    amountTgt?:number,
+    ThroughputAct?: number
+    ThroughputTgt?: number
 }
