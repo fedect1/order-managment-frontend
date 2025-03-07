@@ -8,6 +8,6 @@ export interface LineSummaryProps {
     followingOrder: string,
     amountAct?:number,
     amountTgt?:number,
-    ThroughputAct?: number
-    ThroughputTgt?: number
+    throughputAct?: number
+    throughputTgt?: number
 }

@@ -20,8 +20,8 @@ export const dataLineSummary = [
         followingOrder: "AC390",
         amountAct:230,
         amountTgt:229,
-        throughputAct: 500,
-        throughputTgt: 510
+        throughputAct: 510,
+        throughputTgt: 500
     },
     {
         line: "L3",
@@ -68,7 +68,7 @@ export const dataLineSummary = [
         followingOrder: "AC390",
         amountAct:230,
         amountTgt:229,
-        throughputAct: 500,
+        throughputAct: 60,
         throughputTgt: 510
     },
 
