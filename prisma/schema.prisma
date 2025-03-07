@@ -87,8 +87,7 @@ model t_rawcharge {
   RAWCHARGE_ATTRIBUTE Int      @db.UnsignedTinyInt
   RAWCHARGE_STATE     Int      @db.UnsignedTinyInt
   RAWCHARGE_PARENT    Int      @default(0) @db.UnsignedInt
-
-  silos t_silo[]
+  silos               t_silo[]
 }
 
 model t_rawitem {
@@ -127,14 +126,22 @@ model t_rawtyp {
 }
 
 model t_silo {
-  SILO_SILO     Int      @id @default(autoincrement())
+  SILO_SILO     Int         @id @default(autoincrement())
   SILO_NAME     String
   SILO_QUANTITY Int
-  SILO_CHARGE   Int      @db.UnsignedInt
-  SILO_CAPACITY Decimal  @db.Decimal(6,2)
+  SILO_CHARGE   Int         @db.UnsignedInt
+  SILO_CAPACITY Decimal     @db.Decimal(6, 2)
   SILO_CATEGORY String
+  rawcharge     t_rawcharge @relation(fields: [SILO_CHARGE], references: [RAWCHARGE_RAWCHARGE])
 
-  rawcharge t_rawcharge @relation(fields: [SILO_CHARGE], references: [RAWCHARGE_RAWCHARGE])
+  @@index([SILO_CHARGE], map: "t_silo_SILO_CHARGE_fkey")
 }
 
+model t_mdatact {
+  MDATACT_DATE     DateTime @db.DateTime(0)
+  MDATACT_SYSTEM   Int
+  MDATACT_VARIABLE Int
+  MDATACT_VALUE    Decimal  @db.Decimal(10, 3)
 
+  @@unique([MDATACT_SYSTEM, MDATACT_VARIABLE], map: "MDATACT_IDX_NUM")
+}
