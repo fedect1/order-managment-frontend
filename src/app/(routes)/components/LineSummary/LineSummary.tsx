@@ -44,7 +44,7 @@ export function LineSummary(props: LineSummaryProps) {
   const isThroughputOutOfRange = Math.abs(throughputDiff) > 2;
   
   return (
-    <div className="shadow-md bg-white dark:bg-gray-800 rounded-lg p-3 transition-all hover:shadow-lg">
+    <div className="shadow-2xl bg-white dark:bg-gray-800 rounded-lg p-3 transition-all hover:shadow-lg">
       {/* Header */}
       <div className="flex justify-between items-center pb-2 border-b border-gray-200 dark:border-gray-700">
         <div className="flex gap-2 items-center">

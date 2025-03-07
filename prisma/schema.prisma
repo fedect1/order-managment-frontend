@@ -145,3 +145,72 @@ model t_mdatact {
 
   @@unique([MDATACT_SYSTEM, MDATACT_VARIABLE], map: "MDATACT_IDX_NUM")
 }
+
+// Nuevas tablas para el sistema de órdenes de producción
+
+// Tabla de Órdenes
+model t_ng_orders {
+  order_id           Int                   @id @default(autoincrement()) @db.UnsignedInt
+  job_number         String                @db.VarChar(50)
+  product_number     String                @db.VarChar(50)
+  quantity_kg        Decimal               @db.Decimal(10, 2)
+  consumption_kg_h   Decimal               @db.Decimal(8, 2)
+  pml_target_g_m     Decimal               @db.Decimal(8, 2)
+  width_mm           Int
+  gusset_mm          Int
+  linea_id           Int
+  sequence_number    Int
+  status             Int                   // (pending=3, following=1, in_progress=2, completed=0)
+  created_at         DateTime              @default(now())
+  updated_at_inno    DateTime              @updatedAt
+  updated_at_ibed    DateTime?
+
+  // Relaciones
+  components         t_ng_components[]     // Relación 1:N con componentes
+  production_metrics t_ng_prod_metrics?    // Relación 1:1 con métricas de producción
+  material_usage     t_ng_mat_cons[]       // Relación 1:N con consumo de materiales
+
+  @@index([linea_id], map: "IDX_ORDERS_LINEA_ID")
+  @@index([status], map: "IDX_ORDERS_STATUS")
+}
+
+// Tabla de Componentes
+model t_ng_components {
+  component_id        Int      @id @default(autoincrement()) @db.UnsignedInt
+  order_id            Int      @db.UnsignedInt
+  material_code       String   @db.VarChar(100)
+  percentage          Decimal  @db.Decimal(5, 2)
+  gravimetric_position String   @db.Char(3)
+
+  // Relación con la tabla de órdenes
+  order               t_ng_orders @relation(fields: [order_id], references: [order_id], onDelete: Cascade)
+
+  @@index([order_id], map: "IDX_COMPONENTS_ORDER_ID")
+}
+
+// Tabla de Métricas de Producción para órdenes completadas
+model t_ng_prod_metrics {
+  order_id         Int       @id @db.UnsignedInt
+  time_start       DateTime  @db.DateTime(0)
+  time_finish      DateTime  @db.DateTime(0)
+  total_amount_kg  Decimal   @db.Decimal(10, 2)
+  total_amount_m   Decimal   @db.Decimal(10, 2)
+  average_kg_h     Decimal   @db.Decimal(10, 2)
+
+  // Relación con la tabla de órdenes
+  order            t_ng_orders @relation(fields: [order_id], references: [order_id], onDelete: Cascade)
+}
+
+// Tabla de Seguimiento de uso de Materiales por orden
+model t_ng_mat_cons {
+  id            Int      @id @default(autoincrement()) @db.UnsignedInt
+  order_id      Int      @db.UnsignedInt
+  material_code String   @db.VarChar(50)
+  quantity_kg   Decimal  @db.Decimal(10, 2)
+
+  // Relación con la tabla de órdenes
+  order         t_ng_orders @relation(fields: [order_id], references: [order_id], onDelete: Cascade)
+
+  @@index([order_id], map: "IDX_MAT_CONS_ORDER_ID")
+  @@index([material_code], map: "IDX_MAT_CONS_MATERIAL")
+}

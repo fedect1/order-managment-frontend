@@ -1,7 +1,6 @@
-import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
-import { Menu, Search } from "lucide-react"
+import { Menu } from "lucide-react"
 
 import { SidebarRoutes } from "@/components/SidebarRoutes"
 import { ToggleTheme } from "@/components/ToggleTheme"
@@ -20,9 +19,7 @@ export function Navbar() {
                 </SheetContent>
             </Sheet>    
         </div>
-        <div className="relative w-[300px]">
-            <Input placeholder="search..." className="rounded-lg"/>
-            <Search strokeWidth={1} className="absolute top-2 right-2"/>
+        <div className="flex-1">
         </div>
         <div>
             <ToggleTheme/>
