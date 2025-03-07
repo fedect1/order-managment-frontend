@@ -1,4 +1,5 @@
 import { LineSummaryProps } from "./LineSummary.interface";
+import { CurrentOrderTooltip } from "../CurrentOrderTooltip";
 
 export function LineSummary(props: LineSummaryProps) {
   const {
@@ -11,7 +12,8 @@ export function LineSummary(props: LineSummaryProps) {
     amountAct,
     amountTgt,
     throughputAct,
-    throughputTgt
+    throughputTgt,
+    TooltipInfo
   } = props;
   
   const lineColor = { backgroundColor: color };
@@ -42,7 +44,7 @@ export function LineSummary(props: LineSummaryProps) {
   const isThroughputOutOfRange = Math.abs(throughputDiff) > 2;
   
   return (
-    <div className="shadow-2xl bg-white dark:bg-gray-800 rounded-lg p-3 transition-all hover:shadow-lg">
+    <div className="shadow-md bg-white dark:bg-gray-800 rounded-lg p-3 transition-all hover:shadow-lg">
       {/* Header */}
       <div className="flex justify-between items-center pb-2 border-b border-gray-200 dark:border-gray-700">
         <div className="flex gap-2 items-center">
@@ -65,7 +67,10 @@ export function LineSummary(props: LineSummaryProps) {
       {/* Current Order */}
       <div className="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700 text-sm">
         <p className="text-gray-600 dark:text-gray-400 font-medium">Current Order</p>
-        <p className="font-semibold">{currentOrder}</p>
+        <div className="flex items-center gap-1">
+          <p className="font-semibold">{currentOrder}</p>
+          {TooltipInfo && <CurrentOrderTooltip tooltipInfo={TooltipInfo} />}
+        </div>
       </div>
       
       {/* Throughput Section */}
