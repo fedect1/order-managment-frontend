@@ -7,7 +7,7 @@ export const dataLineSummary = [
         currentOrder: "AC380",
         followingOrder: "AC390",
         amountAct:230,
-        amountTgt:229,
+        amountTgt:240,
         throughputAct: 500,
         throughputTgt: 510
     },
@@ -19,7 +19,7 @@ export const dataLineSummary = [
         currentOrder: "AC380",
         followingOrder: "AC390",
         amountAct:230,
-        amountTgt:229,
+        amountTgt:330,
         throughputAct: 510,
         throughputTgt: 500
     },
@@ -31,7 +31,7 @@ export const dataLineSummary = [
         currentOrder: "AC380",
         followingOrder: "AC390",
         amountAct:230,
-        amountTgt:229,
+        amountTgt:280,
         throughputAct: 500,
         throughputTgt: 510
     },
@@ -43,7 +43,7 @@ export const dataLineSummary = [
         currentOrder: "AC380",
         followingOrder: "AC390",
         amountAct:230,
-        amountTgt:229,
+        amountTgt:333,
         throughputAct: 500,
         throughputTgt: 510
     },
@@ -55,7 +55,7 @@ export const dataLineSummary = [
         currentOrder: "AC380",
         followingOrder: "AC390",
         amountAct:230,
-        amountTgt:229,
+        amountTgt:500,
         throughputAct: 500,
         throughputTgt: 510
     },
@@ -67,7 +67,7 @@ export const dataLineSummary = [
         currentOrder: "AC380",
         followingOrder: "AC390",
         amountAct:230,
-        amountTgt:229,
+        amountTgt:260,
         throughputAct: 60,
         throughputTgt: 510
     },

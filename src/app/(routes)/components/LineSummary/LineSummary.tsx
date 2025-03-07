@@ -16,21 +16,33 @@ export function LineSummary(props: LineSummaryProps) {
   
   const lineColor = { backgroundColor: color };
   
-  // Calcular diferencias porcentuales
+  // Calcular diferencias y remainder
   const throughputDiff = typeof throughputAct === 'number' && typeof throughputTgt === 'number' 
     ? ((throughputAct - throughputTgt) / throughputTgt) * 100 
     : 0;
     
-  const amountDiff = typeof amountAct === 'number' && typeof amountTgt === 'number' 
-    ? ((amountAct - amountTgt) / amountTgt) * 100 
+  // Calcular remainder (cantidad restante)
+  const remainder = typeof amountTgt === 'number' && typeof amountAct === 'number' 
+    ? amountTgt - amountAct 
     : 0;
+    
+  // Calcular porcentaje del remainder respecto al target
+  const remainderPercentage = typeof amountTgt === 'number' && amountTgt !== 0 
+    ? (remainder / amountTgt) * 100 
+    : 0;
+    
+  // Determinar color del remainder según porcentaje
+  const getRemainderColor = () => {
+    if (remainderPercentage < 10) return "text-red-600 dark:text-red-400";
+    if (remainderPercentage < 30) return "text-orange-600 dark:text-orange-400";
+    return "text-green-600 dark:text-green-400";
+  };
   
   // Comprobar si está fuera del rango de ±2%
   const isThroughputOutOfRange = Math.abs(throughputDiff) > 2;
-  const isAmountOutOfRange = Math.abs(amountDiff) > 2;
   
   return (
-    <div className="shadow-md bg-white dark:bg-gray-800 rounded-lg p-3 transition-all hover:shadow-lg">
+    <div className="shadow-2xl bg-white dark:bg-gray-800 rounded-lg p-3 transition-all hover:shadow-lg">
       {/* Header */}
       <div className="flex justify-between items-center pb-2 border-b border-gray-200 dark:border-gray-700">
         <div className="flex gap-2 items-center">
@@ -82,9 +94,9 @@ export function LineSummary(props: LineSummaryProps) {
             <p className="font-semibold text-sm">{amountTgt ?? '-'}</p>
           </div>
           <div className="p-2 bg-gray-50 dark:bg-gray-900 rounded-lg">
-            <p className="text-xs text-gray-500 dark:text-gray-400">Actual [kg]</p>
-            <p className={`font-semibold text-sm ${isAmountOutOfRange ? "text-red-600 dark:text-red-400" : "text-green-600 dark:text-green-400"}`}>
-              {amountAct ?? '-'}
+            <p className="text-xs text-gray-500 dark:text-gray-400">Remainder [kg]</p>
+            <p className={`font-semibold text-sm ${getRemainderColor()}`}>
+              {remainder.toFixed(1) ?? '-'}
             </p>
           </div>
         </div>
