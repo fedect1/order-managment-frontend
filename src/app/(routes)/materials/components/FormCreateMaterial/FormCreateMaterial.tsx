@@ -11,15 +11,28 @@ const densitySchema = z.preprocess((val) => {
     .lt(1, { message: "Value must be less than 1" })
 )
 
+const optionalDensitySchema = z.preprocess((val) => {
+    if (typeof val === "string") return parseFloat(val)
+    if (val === "") return undefined
+    return val
+  }, z.number()
+    .gt(0, { message: "Value must be greater than 0" })
+    .lt(1, { message: "Value must be less than 1" })
+    .optional()
+)
+
 const formSchema = z.object({
-  RAWMAT_NAME: z.string(),
-  RAWMAT_SHORT: z.string().min(2),
+  // Campos obligatorios
+  RAWMAT_NAME: z.string().min(1, { message: "Code is required" }),
+  RAWMAT_SHORT: z.string().min(2, { message: "Material name must have at least 2 characters" }),
   RAWMAT_DENSITY: densitySchema,
-  RAWMAT_MFIVAL: densitySchema,
-  RAWMAT_BULKDENS: densitySchema,
-  RAWMAT_RAWTYP: z.number().min(1),
-  RAWMAT_ARTN: z.string().min(6),
-  RAWMAT_COLOR: z.number().min(5),
+  RAWMAT_RAWTYP: z.number().min(1, { message: "Type is required" }),
+  RAWMAT_COLOR: z.number().min(5, { message: "Color is required" }),
+  
+  // Campos opcionales
+  RAWMAT_MFIVAL: optionalDensitySchema,
+  RAWMAT_BULKDENS: optionalDensitySchema,
+  RAWMAT_ARTN: z.string().optional(),
 });
 
 
@@ -62,8 +75,8 @@ export function FormCreateMaterial(props: FormCreateMaterialProps) {
             RAWMAT_NAME: "",
             RAWMAT_SHORT: "",
             RAWMAT_DENSITY: 0,
-            RAWMAT_MFIVAL: 0,
-            RAWMAT_BULKDENS: 0,
+            RAWMAT_MFIVAL: undefined,
+            RAWMAT_BULKDENS: undefined,
             RAWMAT_RAWTYP: 0,
             RAWMAT_ARTN: "",
             RAWMAT_COLOR: 0,
@@ -98,7 +111,7 @@ export function FormCreateMaterial(props: FormCreateMaterialProps) {
             name="RAWMAT_NAME"
             render={({ field }) => (
                 <FormItem>
-                <FormLabel>Code</FormLabel>
+                <FormLabel>Code *</FormLabel>
                 <FormControl>
                     <Input placeholder="Polycol..." type="text" {...field} />
                 </FormControl>
@@ -111,7 +124,7 @@ export function FormCreateMaterial(props: FormCreateMaterialProps) {
             name="RAWMAT_SHORT"
             render={({ field }) => (
                 <FormItem>
-                <FormLabel>Material</FormLabel>
+                <FormLabel>Material *</FormLabel>
                 <FormControl>
                     <Input placeholder="B.D. POLYAIR BIANC..." type="text" {...field} />
                 </FormControl>
@@ -124,7 +137,7 @@ export function FormCreateMaterial(props: FormCreateMaterialProps) {
             name="RAWMAT_DENSITY"
             render={({ field }) => (
                 <FormItem>
-                <FormLabel>Density g/ccm</FormLabel>
+                <FormLabel>Density g/ccm *</FormLabel>
                 <FormControl>
                     <Input type="number" min={0} step={0.001} {...field} />
                 </FormControl>
@@ -163,7 +176,7 @@ export function FormCreateMaterial(props: FormCreateMaterialProps) {
                 name="RAWMAT_RAWTYP"
                 render={({ field }) => (
                     <FormItem>
-                    <FormLabel>Type</FormLabel>
+                    <FormLabel>Type *</FormLabel>
                     <Select
                         onValueChange={(value: string) => field.onChange(Number(value))}
                         defaultValue={String(field.value)}
@@ -204,7 +217,7 @@ export function FormCreateMaterial(props: FormCreateMaterialProps) {
             name="RAWMAT_COLOR"
             render={({ field }) => (
                 <FormItem>
-                <FormLabel>Color</FormLabel>
+                <FormLabel>Color *</FormLabel>
                 <Select
                     onValueChange={(value: string) => field.onChange(Number(value))}
                     defaultValue={String(field.value)}
