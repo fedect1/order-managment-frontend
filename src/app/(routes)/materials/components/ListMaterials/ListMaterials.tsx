@@ -4,6 +4,9 @@ import { columns } from "./columns";
 
 export async function ListMaterials() {
     const materials = await prisma.t_rawmat.findMany({
+        where: {
+          RAWMAT_DELETED: false
+        },
         orderBy: {
           RAWMAT_RAWMAT: "desc"
         }
