@@ -2,13 +2,18 @@
 
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { t_rawtyp } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, MoreHorizontal, Pencil } from "lucide-react"
 import Link from "next/link"
 
+type RawType = {
+    RAWTYP_RAWTYP: number;
+    RAWTYP_SHORT: string;
+    RAWTYP_DESC: string | null;
+  }
 
-export const columns: ColumnDef<t_rawtyp>[] = [
+
+export const columns: ColumnDef<RawType>[] = [
     {
         accessorKey: "RAWTYP_RAWTYP",
         header: ({ column }) => {

@@ -6,6 +6,9 @@ import prisma from "@/lib/prisma"; // Assuming you have your Prisma client set u
 
 async function fetchRawTypes() {
   const rawTypes = await prisma.t_rawtyp.findMany({
+    where: {
+        RAWTYP_DELETED: false
+    },
     select: {
       RAWTYP_RAWTYP: true,
       RAWTYP_SHORT: true,
@@ -28,7 +31,7 @@ export default async function MaterialsPage() {
       </div>
       <div className="lg:col-span-1">
         <HeaderType/>
-        <ListTypes/>
+        <ListTypes rawTypes={rawTypes}/>
       </div>
     </div>
   )
