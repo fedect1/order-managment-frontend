@@ -114,6 +114,7 @@ model t_rawmat {
   RAWMAT_VIPIDX   Int?     @db.UnsignedInt
   RAWMAT_ARTN     String?  @db.VarChar(45)
   RAWMAT_NOVIP    Boolean? @default(false)
+  RAWMAT_DELETED  Boolean  @default(false)
 
   @@index([RAWMAT_PRODUCER], map: "IDX_RAWMAT_PRODUCER")
   @@index([RAWMAT_RAWTYP], map: "IDX_RAWMAT_RAWTYP")
@@ -123,6 +124,7 @@ model t_rawtyp {
   RAWTYP_RAWTYP Int     @id @default(autoincrement()) @db.UnsignedSmallInt
   RAWTYP_SHORT  String  @unique(map: "IDX_RAWTYP_SHORT") @db.VarChar(10)
   RAWTYP_DESC   String? @db.VarChar(50)
+  RAWTYP_DELETED Boolean @default(false)
 }
 
 model t_silo {
