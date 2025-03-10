@@ -1,7 +1,6 @@
 "use client"
 
 import { z } from "zod";
-
 import axios from "axios";
 
 const densitySchema = z.preprocess((val) => {
@@ -53,7 +52,7 @@ const colorOptions = [
 
 
 export function FormCreateMaterial(props: FormCreateMaterialProps) {
-    const { setOpenModalCreate } = props
+    const { setOpenModalCreate, rawTypes } = props
 
     const router = useRouter()
 
@@ -175,9 +174,11 @@ export function FormCreateMaterial(props: FormCreateMaterialProps) {
                         </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                        <SelectItem value="1">PE_BD</SelectItem>
-                        <SelectItem value="2">HDPE</SelectItem>
-                        <SelectItem value="3">RCY</SelectItem>
+                        {rawTypes.map((type) => (
+                            <SelectItem key={type.RAWTYP_RAWTYP} value={String(type.RAWTYP_RAWTYP)}>
+                                {type.RAWTYP_SHORT}{type.RAWTYP_DESC ? ` - ${type.RAWTYP_DESC}` : ''}
+                            </SelectItem>
+                        ))}
                         </SelectContent>
                     </Select>
                     <FormMessage />
