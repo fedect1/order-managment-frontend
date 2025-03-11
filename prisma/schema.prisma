@@ -37,6 +37,8 @@ model t_av_order {
 
 model t_av_recipe {
   RECIPE_RECIPE          Int      @id @default(autoincrement()) @db.UnsignedInt
+  RECIPE_UUID            String   @db.VarChar(36)
+  RECIPE_DELETE          Boolean  @default(false)
   RECIPE_REZPNR_UNI      String?  @db.VarChar(20)
   RECIPE_SCHICHT         String?  @db.VarChar(4)
   RECIPE_SCHICHT_ANTEIL  Decimal? @db.Decimal(6, 2)

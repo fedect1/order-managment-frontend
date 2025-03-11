@@ -19,7 +19,8 @@ import {
 import { FormCreateRecipeProps } from "./FormCreateRecipe.interface";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Plus, Minus } from "lucide-react";
+import { Plus, Minus, Loader2 } from "lucide-react";
+import { RecipeEntry } from "./RecipeEntry.interface";
 
 // Interface for a dosifier
 interface Dosifier {
@@ -36,6 +37,11 @@ interface Layer {
   percentage: number;
   dosifiers: Dosifier[];
 }
+
+// Función de utilidad para redondear a 2 decimales
+const roundToTwoDecimals = (num: number): number => {
+  return Math.round(num * 100) / 100;
+};
 
 // Zod schema for validation
 const percentageSchema = z.preprocess(
@@ -62,7 +68,11 @@ const layerSchema = z.object({
   ),
 });
 
+// Modificar el schema de Zod para incluir el nombre de la receta
 const formSchema = z.object({
+  recipeName: z.string()
+    .min(1, { message: "Recipe name is required" })
+    .max(20, { message: "Recipe name cannot exceed 20 characters" }),
   layers: z.array(layerSchema),
   totalLayers: z.number().min(1).max(9)
 });
@@ -72,10 +82,13 @@ export function FormCreateRecipe(props: FormCreateRecipeProps) {
   const [numLayers, setNumLayers] = useState(1);
   const [layers, setLayers] = useState<Layer[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
+  // Modificar los valores por defecto del formulario
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      recipeName: "",
       layers: [],
       totalLayers: 1
     },
@@ -83,9 +96,7 @@ export function FormCreateRecipe(props: FormCreateRecipeProps) {
   });
 
   // Initialize the layers when the number of layers changes
-  // Versión corregida del useEffect
-// Versión corregida del useEffect
-useEffect(() => {
+  useEffect(() => {
     // Usar el patrón de actualización funcional para evitar dependencias circulares
     setLayers(prevLayers => {
       const newLayers: Layer[] = [];
@@ -114,15 +125,25 @@ useEffect(() => {
       // Ajustar los porcentajes para que la suma sea 100%
       const totalLayers = newLayers.length;
       if (totalLayers > 0) {
-        const percentagePerLayer = 100 / totalLayers;
-        newLayers.forEach(layer => {
-          layer.percentage = percentagePerLayer;
+        const percentagePerLayer = roundToTwoDecimals(100 / totalLayers);
+        
+        // Aseguramos que el total sea exactamente 100%
+        let remaining = 100;
+        
+        newLayers.forEach((layer, index) => {
+          if (index === newLayers.length - 1) {
+            // La última capa recibe el resto para asegurar que sume exactamente 100%
+            layer.percentage = roundToTwoDecimals(remaining);
+          } else {
+            layer.percentage = percentagePerLayer;
+            remaining -= percentagePerLayer;
+          }
         });
       }
       
       return newLayers;
     });
-  
+
     // Actualizar valores del formulario
     form.setValue('totalLayers', numLayers);
     
@@ -131,11 +152,16 @@ useEffect(() => {
     // donde podemos actualizar el formulario con los valores actualizados
   }, [numLayers, form]);
 
+  // Effect para sincronizar las capas con el formulario
+  useEffect(() => {
+    form.setValue('layers', layers);
+  }, [layers, form]);
+
   // Function to validate that the sum of layer percentages is 100%
   const validateLayerPercentages = () => {
     const totalSum = layers.reduce((total, layer) => total + layer.percentage, 0);
     if (Math.round(totalSum) !== 100) {
-      setError(`The sum of layer percentages must be 100%. Currently: ${totalSum.toFixed(2)}%`);
+      setError(`The sum of layer percentages must be 100%. Currently: ${roundToTwoDecimals(totalSum)}%`);
       return false;
     }
     setError(null);
@@ -144,15 +170,15 @@ useEffect(() => {
 
   // Function to validate that the sum of dosifier percentages in a layer is 100%
   const validateDosifierPercentages = (layerId: string) => {
-    const layer = layers.find(l => l.id === layerId);
+    const layer = layers.find((l: Layer) => l.id === layerId);
     if (layer) {
       const totalSum = layer.dosifiers.reduce((total, dos) => total + dos.percentage, 0);
       if (Math.round(totalSum) > 100) {
-        setError(`The sum of dosifier percentages in Layer ${layerId} cannot exceed 100%. Currently: ${totalSum.toFixed(2)}%`);
+        setError(`The sum of dosifier percentages in Layer ${layerId} cannot exceed 100%. Currently: ${roundToTwoDecimals(totalSum)}%`);
         return false;
       }
       if (Math.round(totalSum) < 100) {
-        setError(`The sum of dosifier percentages in Layer ${layerId} must be 100%. Currently: ${totalSum.toFixed(2)}%`);
+        setError(`The sum of dosifier percentages in Layer ${layerId} must be 100%. Currently: ${roundToTwoDecimals(totalSum)}%`);
         return false;
       }
     }
@@ -164,21 +190,18 @@ useEffect(() => {
   const updateLayerPercentage = (layerId: string, newPercentage: number) => {
     setLayers(prevLayers => {
       const newLayers = [...prevLayers];
-      const layerIndex = newLayers.findIndex(l => l.id === layerId);
+      const layerIndex = newLayers.findIndex((l: Layer) => l.id === layerId);
       
       if (layerIndex !== -1) {
         newLayers[layerIndex].percentage = newPercentage;
       }
       
-      // Update form value
-      form.setValue('layers', newLayers);
-      
       return newLayers;
     });
   };
 
-// Versión corregida de la función addDosifier
-const addDosifier = (layerId: string) => {
+  // Versión corregida de la función addDosifier
+  const addDosifier = (layerId: string) => {
     setLayers(prevLayers => {
       // Verificar si ya existe un dosificador con el ID esperado para evitar duplicación
       const layer = prevLayers.find((l: Layer) => l.id === layerId);
@@ -214,15 +237,21 @@ const addDosifier = (layerId: string) => {
         const additionalDosifiersCount = layer.dosifiers.length - 1;
         
         if (additionalDosifiersCount > 0) {
-          const percentagePerAdditionalDosifier = remainingPercentage / additionalDosifiersCount;
+          const percentagePerAdditionalDosifier = roundToTwoDecimals(remainingPercentage / additionalDosifiersCount);
+          
+          // Asegurar que la suma sea exactamente el porcentaje restante
+          let remaining = remainingPercentage;
           
           for (let i = 1; i < layer.dosifiers.length; i++) {
-            layer.dosifiers[i].percentage = percentagePerAdditionalDosifier;
+            if (i === layer.dosifiers.length - 1) {
+              // El último dosificador adicional recibe el resto
+              layer.dosifiers[i].percentage = roundToTwoDecimals(remaining);
+            } else {
+              layer.dosifiers[i].percentage = percentagePerAdditionalDosifier;
+              remaining -= percentagePerAdditionalDosifier;
+            }
           }
         }
-        
-        // Actualizar el valor del formulario
-        form.setValue('layers', newLayers);
       }
       
       return newLayers;
@@ -233,7 +262,7 @@ const addDosifier = (layerId: string) => {
   const removeDosifier = (layerId: string, dosifierId: number) => {
     setLayers(prevLayers => {
       const newLayers = [...prevLayers];
-      const layerIndex = newLayers.findIndex(l => l.id === layerId);
+      const layerIndex = newLayers.findIndex((l: Layer) => l.id === layerId);
       
       if (layerIndex !== -1) {
         const layer = newLayers[layerIndex];
@@ -255,12 +284,21 @@ const addDosifier = (layerId: string) => {
             dos.id = index + 1; // IDs start at 1 for additional dosifiers
           });
           
-          // Redistribute the removed percentage
+          // Redistribute the removed percentage with rounding
           const additionalDosifiersCount = additionalDosifiers.length;
           if (additionalDosifiersCount > 0) {
-            const additionalPercentagePerDosifier = percentageToRedistribute / additionalDosifiersCount;
-            additionalDosifiers.forEach(dos => {
-              dos.percentage += additionalPercentagePerDosifier;
+            const additionalPercentagePerDosifier = roundToTwoDecimals(percentageToRedistribute / additionalDosifiersCount);
+            
+            // Asegurar que la suma sea exactamente el porcentaje a redistribuir
+            let remaining = percentageToRedistribute;
+            
+            additionalDosifiers.forEach((dos, index) => {
+              if (index === additionalDosifiers.length - 1) {
+                dos.percentage += roundToTwoDecimals(remaining);
+              } else {
+                dos.percentage += additionalPercentagePerDosifier;
+                remaining -= additionalPercentagePerDosifier;
+              }
             });
           } else {
             // If there are no additional dosifiers left, assign everything to the main one
@@ -276,9 +314,6 @@ const addDosifier = (layerId: string) => {
         }
       }
       
-      // Update form value
-      form.setValue('layers', newLayers);
-      
       return newLayers;
     });
   };
@@ -287,7 +322,7 @@ const addDosifier = (layerId: string) => {
   const updateDosifierMaterial = (layerId: string, dosifierId: number, materialId: number) => {
     setLayers(prevLayers => {
       const newLayers = [...prevLayers];
-      const layerIndex = newLayers.findIndex(l => l.id === layerId);
+      const layerIndex = newLayers.findIndex((l: Layer) => l.id === layerId);
       
       if (layerIndex !== -1) {
         const layer = newLayers[layerIndex];
@@ -302,9 +337,6 @@ const addDosifier = (layerId: string) => {
         }
       }
       
-      // Update form value
-      form.setValue('layers', newLayers);
-      
       return newLayers;
     });
   };
@@ -313,7 +345,7 @@ const addDosifier = (layerId: string) => {
   const updateDosifierPercentage = (layerId: string, dosifierId: number, percentage: number) => {
     setLayers(prevLayers => {
       const newLayers = [...prevLayers];
-      const layerIndex = newLayers.findIndex(l => l.id === layerId);
+      const layerIndex = newLayers.findIndex((l: Layer) => l.id === layerId);
       
       if (layerIndex !== -1) {
         const layer = newLayers[layerIndex];
@@ -324,15 +356,84 @@ const addDosifier = (layerId: string) => {
         }
       }
       
-      // Update form value
-      form.setValue('layers', newLayers);
-      
       return newLayers;
     });
   };
 
+  // Función para preparar los datos para la BD
+  const prepareRecipeData = (formData: z.infer<typeof formSchema>) => {
+    const { recipeName, layers } = formData;
+    const recipeEntries: RecipeEntry[] = [];
+
+    // Iterar sobre cada capa
+    layers.forEach(layer => {
+      // Iterar sobre cada dosificador en la capa
+      layer.dosifiers.forEach(dosifier => {
+        // Solo incluir dosificadores que tengan un material asignado
+        if (dosifier.materialId) {
+          recipeEntries.push({
+            RECIPE_REZPNR_UNI: recipeName,
+            RECIPE_SCHICHT: layer.id,
+            RECIPE_SCHICHT_ANTEIL: layer.percentage,
+            RECIPE_REZPNR_MAT: recipeName, // Asumiendo que es el mismo que RECIPE_REZPNR_UNI
+            RECIPE_COMPONENT: dosifier.id,
+            RECIPE_MATERIAL: dosifier.material,
+            RECIPE_MATERIAL_ID: dosifier.materialId.toString(),
+            RECIPE_DICHTE: null, // No tenemos este dato
+            RECIPE_MATERIAL_ANTEIL: dosifier.percentage,
+            RECIPE_ROHSTOFF: null // No tenemos este dato
+          });
+        }
+      });
+    });
+
+    return recipeEntries;
+  };
+
+  // Función para guardar la receta en la base de datos
+  const saveRecipeToDB = async (recipeEntries: RecipeEntry[]) => {
+    try {
+      setError(null);
+      setLoading(true);
+      
+      const response = await fetch('/api/recipe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(recipeEntries),
+      });
+      
+      const result = await response.json();
+      
+      if (!response.ok) {
+        if (result.errors) {
+          // Manejar errores de validación
+          const errorMessage = result.errors
+            .map((err: { path: string[], message: string }) => `${err.path.join('.')}: ${err.message}`)
+            .join(', ');
+          setError(`Validation error: ${errorMessage}`);
+        } else {
+          setError(result.error || 'Failed to save recipe');
+        }
+        return false;
+      }
+      
+      // Éxito
+      console.log('Recipe saved successfully:', result);
+      // Aquí podrías mostrar un mensaje de éxito, redireccionar, etc.
+      return true;
+    } catch (error) {
+      console.error('Error saving recipe:', error);
+      setError('An unexpected error occurred. Please try again.');
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Function to handle form submission
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     const isLayersValid = validateLayerPercentages();
@@ -346,9 +447,40 @@ const addDosifier = (layerId: string) => {
     }
     
     if (isLayersValid && isDosifiersValid) {
-      form.handleSubmit((data) => {
+      form.handleSubmit(async (data) => {
+        // Comprobar que el nombre de la receta no esté vacío
+        if (!data.recipeName.trim()) {
+          setError("Recipe name is required");
+          return;
+        }
+        
+        // Actualizar las capas actuales en los datos del formulario
+        data.layers = layers;
+        
         console.log("Valid recipe:", data);
-        // Here you would process the form submission
+        
+        // Preparar los datos para la BD
+        const recipeEntries = prepareRecipeData(data);
+        console.log("Recipe entries for database:", recipeEntries);
+        
+        // Verificar que al menos haya un dosificador con material asignado
+        if (recipeEntries.length === 0) {
+          setError("At least one dosifier must have a material assigned");
+          return;
+        }
+        
+        // Enviar los datos a la API
+        const success = await saveRecipeToDB(recipeEntries);
+        
+        if (success) {
+          // Mostrar mensaje de éxito o redireccionar
+          setError(null);
+          alert("Recipe saved successfully!");
+          
+          // Opcional: Restablecer el formulario o redireccionar
+          // form.reset();
+          // router.push('/recipes');
+        }
       })();
     }
   };
@@ -362,6 +494,28 @@ const addDosifier = (layerId: string) => {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
+              {/* Campo para el nombre de la receta */}
+              <div>
+                <FormLabel>Recipe Name</FormLabel>
+                <div className="flex items-center mt-1">
+                  <Input
+                    type="text"
+                    maxLength={20}
+                    placeholder="Enter recipe name"
+                    value={form.watch("recipeName")}
+                    onChange={(e) => {
+                      form.setValue("recipeName", e.target.value);
+                    }}
+                    className="w-full"
+                  />
+                </div>
+                {form.formState.errors.recipeName && (
+                  <p className="text-sm text-red-500 mt-1">
+                    {form.formState.errors.recipeName.message}
+                  </p>
+                )}
+              </div>
+
               <div>
                 <FormLabel>Number of Layers (1-9)</FormLabel>
                 <div className="flex items-center space-x-2 mt-1">
@@ -407,13 +561,14 @@ const addDosifier = (layerId: string) => {
                         <div className="flex items-center mt-1">
                           <Input 
                             type="number" 
-                            value={layer.percentage} 
+                            value={roundToTwoDecimals(layer.percentage)} 
                             min="0" 
                             max="100"
+                            step="0.01"
                             onChange={(e) => {
                               const newValue = parseFloat(e.target.value);
                               if (!isNaN(newValue)) {
-                                updateLayerPercentage(layer.id, newValue);
+                                updateLayerPercentage(layer.id, roundToTwoDecimals(newValue));
                               }
                             }}
                             onBlur={() => validateLayerPercentages()}
@@ -492,13 +647,14 @@ const addDosifier = (layerId: string) => {
                                     <div className="flex items-center">
                                       <Input 
                                         type="number" 
-                                        value={dosifier.percentage} 
+                                        value={roundToTwoDecimals(dosifier.percentage)} 
                                         min="0" 
                                         max="100"
+                                        step="0.01"
                                         onChange={(e) => {
                                           const newValue = parseFloat(e.target.value);
                                           if (!isNaN(newValue)) {
-                                            updateDosifierPercentage(layer.id, dosifier.id, newValue);
+                                            updateDosifierPercentage(layer.id, dosifier.id, roundToTwoDecimals(newValue));
                                           }
                                         }}
                                         onBlur={() => validateDosifierPercentages(layer.id)}
@@ -521,8 +677,16 @@ const addDosifier = (layerId: string) => {
               <Button 
                 type="submit" 
                 className="mt-6 w-full"
+                disabled={loading}
               >
-                Save Recipe
+                {loading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  'Save Recipe'
+                )}
               </Button>
             </div>
           </CardContent>
