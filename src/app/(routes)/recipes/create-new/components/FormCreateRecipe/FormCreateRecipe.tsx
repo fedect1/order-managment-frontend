@@ -21,7 +21,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus, Minus, Loader2 } from "lucide-react";
 import { RecipeEntry } from "./RecipeEntry.interface";
-
+import { toast } from "@/hooks/use-toast";
+import { useRouter } from 'next/navigation';
 // Interface for a dosifier
 interface Dosifier {
   id: number;
@@ -78,6 +79,7 @@ const formSchema = z.object({
 });
 
 export function FormCreateRecipe(props: FormCreateRecipeProps) {
+  const router = useRouter()
   const { materials } = props;
   const [numLayers, setNumLayers] = useState(1);
   const [layers, setLayers] = useState<Layer[]>([]);
@@ -475,7 +477,9 @@ export function FormCreateRecipe(props: FormCreateRecipeProps) {
         if (success) {
           // Mostrar mensaje de éxito o redireccionar
           setError(null);
-          alert("Recipe saved successfully!");
+          toast({title: "Recipe created"})
+          router.push("/recipes");
+          router.refresh()
           
           // Opcional: Restablecer el formulario o redireccionar
           // form.reset();
