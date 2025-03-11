@@ -6,7 +6,7 @@ export function HeaderRecipes() {
     <div className="flex items-center justify-between">
       <h2 className="text-2xl">List of Recipes</h2>
       <Link href="/recipes/create-new">
-        <Button>Crear Receta</Button>
+        <Button>Create Recipe</Button>
       </Link>
     </div>
   )
