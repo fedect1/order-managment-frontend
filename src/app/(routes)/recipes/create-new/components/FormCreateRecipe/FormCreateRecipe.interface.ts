@@ -1,12 +1,10 @@
-export interface LineData {
-    LINE_ID: number,
-    LINE_LINE: number,
-    LINE_NAME: string,
-    LINE_SHORT: string,
-    LINE_NDOS: number,
-    LINE_NEXT: number
+export interface MaterialData {
+    RAWMAT_RAWMAT: number,
+    RAWMAT_SHORT: string | null,
+    RAWMAT_COLOR: bigint,
+    RAWMAT_DENSITY: number
   }
-
-export interface FormCreateRecipeProps {
-    lines: LineData[];
-}
+  
+  export interface FormCreateRecipeProps {
+    materials: MaterialData[];
+  }
