@@ -1,0 +1,71 @@
+# services:
+#   db:
+#     image: mysql:5.7
+#     restart: always
+#     ports:
+#       - "${DB_PORT}:3306"
+#     environment:
+#       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+#       MYSQL_DATABASE: ${DB_NAME}
+#     container_name: lenzingDB
+#     volumes:
+#       - ./mysql:/var/lib/mysql
+
+version: '3.8'
+
+services:
+  # Servicio de base de datos MySQL
+  db:
+    image: mysql:5.7
+    restart: always
+    ports:
+      - "${DB_PORT}:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+    container_name: order-manager-db
+    volumes:
+      - ./mysql:/var/lib/mysql
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # Servicio de la aplicación Next.js
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: order-manager
+    restart: always
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - /app/.next
+      - next-cache:/app/.next/cache
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=mysql://root:${DB_PASSWORD}@db:3306/${DB_NAME}
+      - NEXT_TELEMETRY_DISABLED=1
+      - WATCHPACK_POLLING=true # Necesario para Fast Refresh en Docker
+      - CHOKIDAR_USEPOLLING=true # Mejora la detección de cambios en archivos
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+    command: sh -c "npx prisma migrate deploy && npm run dev -- -p ${APP_PORT:-3000}"
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  next-cache:
+    driver: local
