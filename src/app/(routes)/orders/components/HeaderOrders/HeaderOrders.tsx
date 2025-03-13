@@ -15,8 +15,14 @@ import { Button } from "@/components/ui/button"
 
 import { useState } from "react"
 import { FormCreateOrder } from "../FormCreateOrder"
+import { LineData } from "../FormCreateOrder/FormCreateOrder.interface"
 
-export function HeaderOrders() {
+
+interface HeaderOrderProps {
+  lineList: LineData[]
+}
+
+export function HeaderOrders({lineList}:HeaderOrderProps) {
   const[openModalCreate, setOpenModalCreate] = useState(false)
   return (
     <div className="flex items-center justify-between">
@@ -33,7 +39,7 @@ export function HeaderOrders() {
               </DialogDescription>
           </DialogHeader>
 
-          <FormCreateOrder setOpenModalCreate={setOpenModalCreate} />
+          <FormCreateOrder setOpenModalCreate={setOpenModalCreate} lineList={lineList} />
 
         </DialogContent>
       </Dialog>

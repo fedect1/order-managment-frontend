@@ -30,7 +30,7 @@ import { FormCreateOrderProps } from "./FormCreateOrder.interface"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 export function FormCreateOrder(props: FormCreateOrderProps) {
-    const { setOpenModalCreate } = props
+    const { setOpenModalCreate, lineList } = props
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -151,31 +151,32 @@ export function FormCreateOrder(props: FormCreateOrderProps) {
             )}
             />
             <FormField
-            control={form.control}
-            name="linea_id"
-            render={({ field }) => (
-                <FormItem>
-                <FormLabel>Assigned line identifier</FormLabel>
-                <Select
-                onValueChange={(value) => field.onChange(parseInt(value))}
-                value={field.value.toString()}
-                >
-                    <FormControl>
-                        <SelectTrigger>
-                            <SelectValue placeholder="Select line"/>
-                        </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                        <SelectItem value="1">Line 1</SelectItem>
-                        <SelectItem value="2">Line 2</SelectItem>
-                        <SelectItem value="3">Line 3</SelectItem>
-                        <SelectItem value="4">Line 4</SelectItem>
-                    </SelectContent>
-                </Select>
-                <FormMessage />
-                </FormItem>
-            )}
-            />
+  control={form.control}
+  name="linea_id"
+  render={({ field }) => (
+    <FormItem>
+      <FormLabel>Assigned line identifier</FormLabel>
+      <Select
+        onValueChange={(value) => field.onChange(parseInt(value))}
+        value={field.value.toString()}
+      >
+        <FormControl>
+          <SelectTrigger>
+            <SelectValue placeholder="Select line"/>
+          </SelectTrigger>
+        </FormControl>
+        <SelectContent>
+          {lineList.map((line) => (
+            <SelectItem key={line.LINE_ID} value={line.LINE_ID.toString()}>
+              {line.LINE_NAME}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      <FormMessage />
+    </FormItem>
+  )}
+/>
         </div>
         <Button type="submit" disabled={!isValid}>Submit</Button>
       </form>
