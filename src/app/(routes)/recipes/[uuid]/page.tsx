@@ -219,10 +219,6 @@ export default function RecipeDetailPage({ params }: RecipeDetailPageProps) {
                         <dd className="mt-1">{recipe.name}</dd>
                       </div>
                       <div>
-                        <dt className="text-sm font-medium text-gray-500">UUID</dt>
-                        <dd className="mt-1 text-sm font-mono">{recipe.uuid}</dd>
-                      </div>
-                      <div>
                         <dt className="text-sm font-medium text-gray-500">Total Layers</dt>
                         <dd className="mt-1">{recipe.layers.length}</dd>
                       </div>
