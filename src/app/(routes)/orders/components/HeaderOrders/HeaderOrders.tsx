@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button"
 
 
 import { useState } from "react"
-import { FormCreateCustomer } from "../FormCreateCustomer"
+import { FormCreateOrder } from "../FormCreateOrder"
 
 export function HeaderOrders() {
   const[openModalCreate, setOpenModalCreate] = useState(false)
@@ -33,7 +33,7 @@ export function HeaderOrders() {
               </DialogDescription>
           </DialogHeader>
 
-          <FormCreateCustomer setOpenModalCreate={setOpenModalCreate} />
+          <FormCreateOrder setOpenModalCreate={setOpenModalCreate} />
 
         </DialogContent>
       </Dialog>
