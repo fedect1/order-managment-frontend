@@ -11,6 +11,7 @@ const formSchema = z.object({
     width_mm: z.coerce.number().int().positive(),
     gusset_mm: z.coerce.number().int().positive(),
     linea_id: z.coerce.number().int().positive(),
+    recipe_uuid: z.string().min(2),
 })
 
 import { Button } from "@/components/ui/button"
@@ -26,11 +27,11 @@ import {
 import { Input } from "@/components/ui/input"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { FormCreateOrderProps } from "./FormCreateOrder.interface"
+import { FormCreateOrderProps, RecipeData } from "./FormCreateOrder.interface"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 export function FormCreateOrder(props: FormCreateOrderProps) {
-    const { setOpenModalCreate, lineList } = props
+    const { setOpenModalCreate, lineList, recipeList } = props
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -43,6 +44,7 @@ export function FormCreateOrder(props: FormCreateOrderProps) {
             width_mm: 0,
             gusset_mm: 0,
             linea_id: 0,
+            recipe_uuid: ""
         },
         mode: "onChange",
     })
@@ -169,6 +171,33 @@ export function FormCreateOrder(props: FormCreateOrderProps) {
                     {lineList.map((line) => (
                         <SelectItem key={line.LINE_ID} value={line.LINE_ID.toString()}>
                         {line.LINE_NAME}
+                        </SelectItem>
+                    ))}
+                    </SelectContent>
+                </Select>
+                <FormMessage />
+                </FormItem>
+            )}
+            />
+            <FormField
+            control={form.control}
+            name="recipe_uuid"
+            render={({ field }) => (
+                <FormItem>
+                <FormLabel>Assigned Recipe</FormLabel>
+                <Select
+                    onValueChange={(value) => field.onChange(value)}
+                    value={field.value.toString()}
+                >
+                    <FormControl>
+                    <SelectTrigger>
+                        <SelectValue placeholder="Select recipe"/>
+                    </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                    {recipeList.map((recipe: RecipeData) => (
+                        <SelectItem key={recipe.RECIPE_UUID} value={recipe.RECIPE_UUID}>
+                        {recipe.RECIPE_REZPNR_UNI}
                         </SelectItem>
                     ))}
                     </SelectContent>

@@ -15,14 +15,15 @@ import { Button } from "@/components/ui/button"
 
 import { useState } from "react"
 import { FormCreateOrder } from "../FormCreateOrder"
-import { LineData } from "../FormCreateOrder/FormCreateOrder.interface"
+import { LineData, RecipeData } from "../FormCreateOrder/FormCreateOrder.interface"
 
 
 interface HeaderOrderProps {
-  lineList: LineData[]
+  lineList: LineData[],
+  recipeList: RecipeData[]
 }
 
-export function HeaderOrders({lineList}:HeaderOrderProps) {
+export function HeaderOrders({lineList, recipeList}:HeaderOrderProps) {
   const[openModalCreate, setOpenModalCreate] = useState(false)
   return (
     <div className="flex items-center justify-between">
@@ -39,7 +40,7 @@ export function HeaderOrders({lineList}:HeaderOrderProps) {
               </DialogDescription>
           </DialogHeader>
 
-          <FormCreateOrder setOpenModalCreate={setOpenModalCreate} lineList={lineList} />
+          <FormCreateOrder setOpenModalCreate={setOpenModalCreate} lineList={lineList} recipeList={recipeList} />
 
         </DialogContent>
       </Dialog>

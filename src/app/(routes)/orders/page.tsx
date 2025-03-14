@@ -36,11 +36,10 @@ async function fetchRecipes() {
 
 export default async function OrdersPage() {
   const lineList = await fetchLines()
-  const recipesList = await fetchRecipes()
-  console.log(recipesList)
+  const recipeList = await fetchRecipes()
   return (
     <div>
-        <HeaderOrders lineList={lineList}/>
+        <HeaderOrders lineList={ lineList } recipeList={ recipeList }/>
         <p>List of orders</p>
     </div>
   )
