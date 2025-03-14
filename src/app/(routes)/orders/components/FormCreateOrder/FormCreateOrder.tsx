@@ -64,7 +64,7 @@ export function FormCreateOrder(props: FormCreateOrderProps) {
             name="job_number"
             render={({ field }) => (
                 <FormItem>
-                <FormLabel>Order/job number (No. ordine)</FormLabel>
+                <FormLabel>Order/job number</FormLabel>
                 <FormControl>
                     <Input placeholder="JOB-20250306-A" type="text" {...field} />
                 </FormControl>
@@ -77,7 +77,7 @@ export function FormCreateOrder(props: FormCreateOrderProps) {
             name="product_number"
             render={({ field }) => (
                 <FormItem>
-                <FormLabel>Product or article number (No. prodotto)</FormLabel>
+                <FormLabel>Product or article number</FormLabel>
                 <FormControl>
                     <Input placeholder="PROD-5678" type="text" {...field} />
                 </FormControl>
@@ -129,7 +129,7 @@ export function FormCreateOrder(props: FormCreateOrderProps) {
             name="width_mm"
             render={({ field }) => (
                 <FormItem>
-                <FormLabel>Gross width in mm (Larghezza)</FormLabel>
+                <FormLabel>Gross width in mm</FormLabel>
                 <FormControl>
                     <Input placeholder="600" type="number" min="0" {...field} />
                 </FormControl>
@@ -142,7 +142,7 @@ export function FormCreateOrder(props: FormCreateOrderProps) {
             name="gusset_mm"
             render={({ field }) => (
                 <FormItem>
-                <FormLabel>Gusset size (soffietti) in mm</FormLabel>
+                <FormLabel>Gusset size [mm]</FormLabel>
                 <FormControl>
                     <Input placeholder="100" type="number" min="0" {...field} />
                 </FormControl>
@@ -151,32 +151,32 @@ export function FormCreateOrder(props: FormCreateOrderProps) {
             )}
             />
             <FormField
-  control={form.control}
-  name="linea_id"
-  render={({ field }) => (
-    <FormItem>
-      <FormLabel>Assigned line identifier</FormLabel>
-      <Select
-        onValueChange={(value) => field.onChange(parseInt(value))}
-        value={field.value.toString()}
-      >
-        <FormControl>
-          <SelectTrigger>
-            <SelectValue placeholder="Select line"/>
-          </SelectTrigger>
-        </FormControl>
-        <SelectContent>
-          {lineList.map((line) => (
-            <SelectItem key={line.LINE_ID} value={line.LINE_ID.toString()}>
-              {line.LINE_NAME}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-      <FormMessage />
-    </FormItem>
-  )}
-/>
+            control={form.control}
+            name="linea_id"
+            render={({ field }) => (
+                <FormItem>
+                <FormLabel>Assigned line identifier</FormLabel>
+                <Select
+                    onValueChange={(value) => field.onChange(parseInt(value))}
+                    value={field.value.toString()}
+                >
+                    <FormControl>
+                    <SelectTrigger>
+                        <SelectValue placeholder="Select line"/>
+                    </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                    {lineList.map((line) => (
+                        <SelectItem key={line.LINE_ID} value={line.LINE_ID.toString()}>
+                        {line.LINE_NAME}
+                        </SelectItem>
+                    ))}
+                    </SelectContent>
+                </Select>
+                <FormMessage />
+                </FormItem>
+            )}
+            />
         </div>
         <Button type="submit" disabled={!isValid}>Submit</Button>
       </form>
