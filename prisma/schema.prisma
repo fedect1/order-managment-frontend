@@ -186,7 +186,7 @@ model t_ng_orders {
   created_at         DateTime              @default(now())
   updated_at_inno    DateTime              @updatedAt
   updated_at_ibed    DateTime?
-  recipe_id          Int?                  // Referencia opcional a la receta (t_av_recipe)
+  recipe_uuid        String?               @db.VarChar(36) // UUID de la receta como cadena
 
   // Relaciones
   components         t_ng_components[]     // Relación 1:N con componentes

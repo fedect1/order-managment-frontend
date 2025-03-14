@@ -15,7 +15,7 @@ const orderSchema = z.object({
   width_mm: z.coerce.number().int().positive(),
   gusset_mm: z.coerce.number().int().positive(),
   linea_id: z.coerce.number().int().positive(),
-  recipe_id: z.coerce.number().int().optional(),
+  recipe_uuid: z.string().optional(),
 });
 
 // Mapeo de valores numéricos a los valores de enum de OrderStatus
@@ -120,7 +120,7 @@ export async function POST(request: NextRequest) {
         }
       }
       
-      // 4. Crear la orden con la posición adecuada
+      // 5. Crear la orden con la posición adecuada
       const order = await tx.t_ng_orders.create({
         data: {
           job_number: validatedData.job_number,
@@ -133,13 +133,13 @@ export async function POST(request: NextRequest) {
           linea_id: validatedData.linea_id,
           sequence_number: nextPosition,
           status: status,
-          recipe_id: validatedData.recipe_id,
+          recipe_uuid: validatedData.recipe_uuid, // Usar recipe_uuid directamente
           is_cancelled: false,
           created_at: new Date()
         }
       });
       
-      // 5. Actualizar la versión de la línea
+      // 6. Actualizar la versión de la línea
       await lineVersionService.updateLineVersion(tx, validatedData.linea_id);
       
       return NextResponse.json({ success: true, data: order }, { status: 201 });
