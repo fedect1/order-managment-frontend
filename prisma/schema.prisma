@@ -152,6 +152,23 @@ model t_mdatact {
 
 // Nuevas tablas para el sistema de órdenes de producción
 
+// Definición para mantener una versión de control por línea
+model t_ng_line_version {
+  id             Int       @id @default(autoincrement()) @db.UnsignedInt
+  line_id        Int       @unique @db.MediumInt
+  last_updated   DateTime  @default(now()) @updatedAt
+  version_hash   String    @db.VarChar(64)
+}
+
+// Definición de los estados de órdenes
+enum OrderStatus {
+  COMPLETED    @map("0") // Completado
+  WAITING      @map("1") // En espera (siguiente)
+  ACTIVE       @map("2") // En proceso (actual)
+  PENDING      @map("3") // Pendiente (sin asignar)
+  CANCELLED    @map("4") // Cancelada
+}
+
 // Tabla de Órdenes
 model t_ng_orders {
   order_id           Int                   @id @default(autoincrement()) @db.UnsignedInt
@@ -163,11 +180,13 @@ model t_ng_orders {
   width_mm           Int
   gusset_mm          Int
   linea_id           Int
-  sequence_number    Int
-  status             Int                   // (pending=3, following=1, in_progress=2, completed=0)
+  sequence_number    Int                   // Posición en la cola (1 = actual, 2 = siguiente, etc.)
+  status             OrderStatus           // Mapeo del estado numérico al enum
+  is_cancelled       Boolean               @default(false) // Flag adicional para cancelaciones
   created_at         DateTime              @default(now())
   updated_at_inno    DateTime              @updatedAt
   updated_at_ibed    DateTime?
+  recipe_id          Int?                  // Referencia opcional a la receta (t_av_recipe)
 
   // Relaciones
   components         t_ng_components[]     // Relación 1:N con componentes
@@ -176,6 +195,8 @@ model t_ng_orders {
 
   @@index([linea_id], map: "IDX_ORDERS_LINEA_ID")
   @@index([status], map: "IDX_ORDERS_STATUS")
+  @@index([sequence_number], map: "IDX_ORDERS_SEQUENCE")
+  @@unique([linea_id, sequence_number], map: "UNQ_LINE_SEQUENCE") // Garantiza secuencia única por línea
 }
 
 // Tabla de Componentes
