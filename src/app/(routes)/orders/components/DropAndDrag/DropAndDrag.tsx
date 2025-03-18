@@ -1,12 +1,84 @@
 'use client'
-import { useState } from 'react';
-import { Reorder } from "framer-motion"
-import { LineData } from '../CardOrderLine/DropAndDrag.interface';
+import { useState, useEffect } from 'react';
+import { Reorder } from "framer-motion";
 
-export function DropAndDrag( { id }: LineData) {
-  const [items, setItems] = useState(["AB-111", "AB-222", "AB-333", "AB-444", "AB-555"])
-  console.log(id)
-  
+interface OrderData {
+  job_number: string;
+  product_number: string;
+  quantity_kg: number;
+  linea_id: number;
+  status: string;
+  sequence_number: number;
+}
+
+interface DropAndDragProps {
+  id: number;
+}
+
+export function DropAndDrag({ id }: DropAndDragProps) {
+  const [items, setItems] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Fetch orders when component mounts
+    const fetchOrders = async () => {
+      try {
+        setLoading(true);
+        // Add the lineId and status=2 (ACTIVE) as query parameters
+        const response = await fetch(`/api/orders?lineId=${id}&status=2`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch orders');
+        }
+
+        const data = await response.json();
+        
+        if (data.success && data.data) {
+          // Map the orders to the format you need
+          const orderItems = data.data.map((order: OrderData) => order.job_number);
+          setItems(orderItems.length > 0 ? orderItems : ["No active orders found"]);
+        } else {
+          // If no orders or error, set default state
+          setItems(["No active orders available"]);
+        }
+      } catch (err: unknown) {
+        console.error('Error fetching orders:', err);
+        // Properly handle the unknown error type
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError('An unknown error occurred');
+        }
+        // Set default items in case of error
+        setItems(["Error loading orders"]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (id) {
+      fetchOrders();
+    } else {
+      // If no id is provided, use default items
+      setItems(["AB-111", "AB-222", "AB-333", "AB-444", "AB-555"]);
+      setLoading(false);
+    }
+  }, [id]); // Re-run when id changes
+
+  if (loading) {
+    return <div className="py-4 text-center">Loading orders...</div>;
+  }
+
+  if (error) {
+    return <div className="py-4 text-center text-red-500">Error: {error}</div>;
+  }
+
   return (
     <div className="space-y-2 py-1">
       <Reorder.Group values={items} onReorder={setItems} className="space-y-2">
@@ -34,5 +106,5 @@ export function DropAndDrag( { id }: LineData) {
         ))}
       </Reorder.Group>
     </div>
-  )
+  );
 }

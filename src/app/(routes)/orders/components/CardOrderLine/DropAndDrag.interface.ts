@@ -1,5 +1,5 @@
 export interface LineData {
-    id?: number,
+    id: number,
     color?: bigint,
     line?: string
 }
