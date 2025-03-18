@@ -45,12 +45,11 @@ export default async function OrdersPage() {
           <p>List of orders</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-x-20">
-          <CardOrderLine/>
-          <CardOrderLine/>
-          <CardOrderLine/>
-          <CardOrderLine/>
-          <CardOrderLine/>
-          <CardOrderLine/>
+          {
+            lineList.map((line)=>(
+              <CardOrderLine key={line.LINE_ID} line={line.LINE_NAME} color={line.LINE_COLOUR}/>
+            ))
+          }
         </div>
     </div>
   )
