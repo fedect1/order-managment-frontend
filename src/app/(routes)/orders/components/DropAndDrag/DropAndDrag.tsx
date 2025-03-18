@@ -25,8 +25,8 @@ export function DropAndDrag({ id }: DropAndDragProps) {
     const fetchOrders = async () => {
       try {
         setLoading(true);
-        // Add the lineId and status=2 (ACTIVE) as query parameters
-        const response = await fetch(`/api/orders?lineId=${id}&status=2`, {
+        // Add the lineId and status=2 (WAITING) as query parameters
+        const response = await fetch(`/api/orders?lineId=${id}&status=1`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
