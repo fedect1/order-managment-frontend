@@ -1,9 +1,11 @@
 'use client'
 import { useState } from 'react';
 import { Reorder } from "framer-motion"
+import { LineData } from '../CardOrderLine/DropAndDrag.interface';
 
-export function DropAndDrag() {
+export function DropAndDrag( { id }: LineData) {
   const [items, setItems] = useState(["AB-111", "AB-222", "AB-333", "AB-444", "AB-555"])
+  console.log(id)
   
   return (
     <div className="space-y-2 py-1">

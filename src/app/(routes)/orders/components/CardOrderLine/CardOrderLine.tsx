@@ -1,7 +1,7 @@
 import { DropAndDrag } from "../DropAndDrag";
-import { LineData } from '../../../materials/[materialId]/DropAndDrag.interface';
+import { LineData } from './DropAndDrag.interface';
 
-export function CardOrderLine({line, color}: LineData) {
+export function CardOrderLine({line, color, id}: LineData) {
   const getColorStyle = () => {
     if (!color) return { backgroundColor: '#3B82F6' };
     const hexColor = '#' + Number(color).toString(16).padStart(6, '0');
@@ -25,7 +25,7 @@ export function CardOrderLine({line, color}: LineData) {
       </div>
       
       <div className="p-2">
-        <DropAndDrag />
+        <DropAndDrag id={ id } />
       </div>
     </div>
   );
