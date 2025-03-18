@@ -75,6 +75,7 @@ export function FormCreateOrder(props: FormCreateOrderProps) {
         toast({
           title: "Orden created",
           description: `The order ${values.job_number} has been created and added to the production queue.`,
+          
         })
         setOpenModalCreate(false)
       } else {
