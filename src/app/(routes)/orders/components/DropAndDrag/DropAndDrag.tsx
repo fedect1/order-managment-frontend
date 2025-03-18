@@ -10,8 +10,8 @@ export function DropAndDrag() {
         <Reorder.Group values={items} onReorder={setItems}>
             {items.map((item)=>(
                     <Reorder.Item value={item} key={item}>    
-                        <Card key={item}>
-                            <CardHeader className=''>
+                        <Card key={item} className='cursor-pointer'>
+                            <CardHeader>
                                 <CardTitle className='m-8'>
                                     Item {item}
                                 </CardTitle>

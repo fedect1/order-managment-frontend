@@ -1,5 +1,6 @@
 import { HeaderOrders } from "./components/HeaderOrders"
 import prisma from "@/lib/prisma";
+import { DropAndDrag } from './components/DropAndDrag/DropAndDrag';
 
 async function fetchLines() {
   const lineList = await prisma.t_line.findMany({
@@ -39,8 +40,13 @@ export default async function OrdersPage() {
   const recipeList = await fetchRecipes()
   return (
     <div>
-        <HeaderOrders lineList={ lineList } recipeList={ recipeList }/>
-        <p>List of orders</p>
+        <div>
+          <HeaderOrders lineList={ lineList } recipeList={ recipeList }/>
+          <p>List of orders</p>
+        </div>
+        <div>
+          <DropAndDrag/>
+        </div>
     </div>
   )
 }
