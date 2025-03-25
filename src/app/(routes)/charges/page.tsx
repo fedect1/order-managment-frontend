@@ -3,6 +3,8 @@ import { SiloSummary } from "./components/silos/SiloSummary";
 import { dataSiloSummary } from "./components/silos/SiloSummary/SiloSummary.data";
 import { HeaderSilo } from "./components/silos";
 import { ListCharges } from "./components/charges/ListCharges";
+import { DosingUnit } from "@/components/DosingUnit";
+import { Silo } from "@/components/SiloIcon";
 
 
 export default function ChargesPage() {
@@ -30,6 +32,12 @@ export default function ChargesPage() {
         <div className="lg:col-span-3">
           <HeaderCharge/>
           <ListCharges/>
+        </div>
+        <div>
+            <DosingUnit/>
+        </div>
+        <div style={{ width: '200px', height: '250px', display: 'inline-block', margin: '10px' }}>
+          <Silo fillPercentage={50} name="Silo A"/>
         </div>
     </div>
   )
