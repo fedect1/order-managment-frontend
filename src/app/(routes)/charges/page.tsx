@@ -4,6 +4,7 @@ import { dataSiloSummary } from "./components/silos/SiloSummary/SiloSummary.data
 import { HeaderSilo } from "./components/silos";
 import { ListCharges } from "./components/charges/ListCharges";
 import { BulkContainer } from "@/components/BulkContainer";
+import { BulkSummary } from "./components/silos/BulkSummary";
 
 
 export default function ChargesPage() {
@@ -25,7 +26,39 @@ export default function ChargesPage() {
                     RAWMAT_RAWTYP={RAWMAT_RAWTYP}
                     />
                     ))
-                }
+                }                
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 lg:gap-x-3">
+            <div>
+              <div style={{ width: '200px', height: '160px', display: 'inline-block', margin: '10px' }}>
+              <BulkContainer
+                fillPercentage={50} 
+                name="Bulk 1" 
+                color="green" 
+              />
+              </div>
+              <BulkSummary/>
+            </div>
+            <div>
+              <div style={{ width: '200px', height: '160px', display: 'inline-block', margin: '10px' }}>
+                <BulkContainer
+                  fillPercentage={80} 
+                  name="Bulk 2" 
+                  color="blue" 
+                />
+              </div>
+              <BulkSummary/>
+            </div>
+            <div>
+              <div style={{ width: '200px', height: '160px', display: 'inline-block', margin: '10px' }}>
+                <BulkContainer
+                  fillPercentage={10} 
+                  name="Bulk 3" 
+                  color="yellow" 
+                />
+              </div>
+              <BulkSummary/>
+            </div>
             </div>
         </div>
         <div className="lg:col-span-3">
@@ -33,7 +66,8 @@ export default function ChargesPage() {
           <ListCharges/>
         </div>
                
-        <div style={{ width: '200px', height: '250px', display: 'inline-block', margin: '10px' }}>
+        {/* <div style={{ width: '200px', height: '250px', display: 'inline-block', margin: '10px' }}>
+        <BulkSummary/>
         <BulkContainer
           fillPercentage={50} 
           name="Bulk 1" 
@@ -53,7 +87,7 @@ export default function ChargesPage() {
           name="Bulk 3" 
           color="yellow" 
         />
-        </div>
+        </div> */}
     </div>
   )
 }
