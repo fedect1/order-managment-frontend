@@ -32,7 +32,7 @@ export default function ChargesPage() {
           <HeaderCharge/>
           <ListCharges/>
         </div>
-
+               
         <div style={{ width: '200px', height: '250px', display: 'inline-block', margin: '10px' }}>
         <BulkContainer
           fillPercentage={50} 
