@@ -90,6 +90,7 @@ model t_rawcharge {
   RAWCHARGE_STATE     Int      @db.UnsignedTinyInt
   RAWCHARGE_PARENT    Int      @default(0) @db.UnsignedInt
   silos               t_silo[]
+  bulk                t_bulk[]
 }
 
 model t_rawitem {
@@ -139,6 +140,18 @@ model t_silo {
   rawcharge     t_rawcharge @relation(fields: [SILO_CHARGE], references: [RAWCHARGE_RAWCHARGE])
 
   @@index([SILO_CHARGE], map: "t_silo_SILO_CHARGE_fkey")
+}
+
+model t_bulk {
+  BULK_BULK     Int         @id @default(autoincrement())
+  BULK_NAME     String
+  BULK_QUANTITY Int
+  BULK_CHARGE   Int         @db.UnsignedInt
+  BULK_CAPACITY Decimal     @db.Decimal(6, 2)
+  BULK_CATEGORY String
+  rawcharge     t_rawcharge @relation(fields: [BULK_CHARGE], references: [RAWCHARGE_RAWCHARGE])
+
+  @@index([BULK_CHARGE], map: "t_bulk_BULK_CHARGE_fkey")
 }
 
 model t_mdatact {
