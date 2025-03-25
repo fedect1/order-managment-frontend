@@ -16,12 +16,20 @@ export function Silo({ fillPercentage = 100, name = "" }) {
   
   // Altura total del silo (cuerpo cilíndrico)
   const siloHeight = 160;
-  const contentHeight = safePercentage * siloHeight / 100;
+  const contentHeight = safePercentage * siloHeight / 105;
   
   const calculateColor = () => {
-    const red = Math.round(255 * (100 - safePercentage) / 100);
-    const green = Math.round(204 * safePercentage / 100);
-    return `rgb(${red}, ${green}, 0)`;
+    // Verde -> Naranja -> Rojo
+    if (safePercentage >= 60) {
+      // Verde (60-100%)
+      return "#2ECC71"; // Verde brillante
+    } else if (safePercentage >= 30) {
+      // Naranja (30-59%)
+      return "#F39C12"; // Naranja
+    } else {
+      // Rojo (0-29%)
+      return "#E74C3C"; // Rojo
+    }
   };
   
   const fillColor = calculateColor();
@@ -126,7 +134,7 @@ export function Silo({ fillPercentage = 100, name = "" }) {
       {/* Contenido del silo (nivel de llenado) */}
       <rect 
         x="43" 
-        y={190 - contentHeight} 
+        y={188 - contentHeight} 
         width="114" 
         height={contentHeight} 
         fill={fillColor} 

@@ -38,7 +38,7 @@ export const dataSiloSummary = [
     {
         SILO_SILO: 5,
         SILO_NAME: "Silo 5",
-        SILO_QUANTITY: 3500,
+        SILO_QUANTITY: 5000,
         SILO_CHARGE: "5",
         SILO_CAPACITY: 5000,
         RAWMAT_NAME: "PR5",

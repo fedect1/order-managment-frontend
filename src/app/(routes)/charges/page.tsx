@@ -3,8 +3,7 @@ import { SiloSummary } from "./components/silos/SiloSummary";
 import { dataSiloSummary } from "./components/silos/SiloSummary/SiloSummary.data";
 import { HeaderSilo } from "./components/silos";
 import { ListCharges } from "./components/charges/ListCharges";
-import { DosingUnit } from "@/components/DosingUnit";
-import { Silo } from "@/components/SiloIcon";
+import { BulkContainer } from "@/components/BulkContainer";
 
 
 export default function ChargesPage() {
@@ -33,11 +32,27 @@ export default function ChargesPage() {
           <HeaderCharge/>
           <ListCharges/>
         </div>
-        <div>
-            <DosingUnit/>
+
+        <div style={{ width: '200px', height: '250px', display: 'inline-block', margin: '10px' }}>
+        <BulkContainer
+          fillPercentage={50} 
+          name="Bulk 1" 
+          color="green" 
+        />
         </div>
         <div style={{ width: '200px', height: '250px', display: 'inline-block', margin: '10px' }}>
-          <Silo fillPercentage={50} name="Silo A"/>
+        <BulkContainer
+          fillPercentage={10} 
+          name="Bulk 2" 
+          color="blue" 
+        />
+        </div>
+        <div style={{ width: '200px', height: '250px', display: 'inline-block', margin: '10px' }}>
+        <BulkContainer
+          fillPercentage={70} 
+          name="Bulk 3" 
+          color="yellow" 
+        />
         </div>
     </div>
   )
