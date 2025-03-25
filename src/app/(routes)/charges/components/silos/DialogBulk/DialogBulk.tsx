@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { useState } from "react"
+import { CreateBulkForm } from "../CreateBulkForm"
 
 
 export function DialogBulk() {
@@ -19,6 +20,7 @@ export function DialogBulk() {
                 Create and configure your new Bulk
             </DialogDescription>
             </DialogHeader>
+            <CreateBulkForm setOpenModalCreate={setOpenModalCreate}/>
         </DialogContent>
     </Dialog>
   )
