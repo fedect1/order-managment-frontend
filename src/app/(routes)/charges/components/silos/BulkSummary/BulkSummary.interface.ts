@@ -1,4 +1,4 @@
-export interface SiloSummaryProps {
+export interface BulkSummaryProps {
     BULK_BULK: number;
     BULK_NAME: string;
     BULK_QUANTITY: number;

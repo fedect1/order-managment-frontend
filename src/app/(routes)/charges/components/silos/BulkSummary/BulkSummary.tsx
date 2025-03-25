@@ -50,6 +50,6 @@ export function BulkSummary() {
                   
                   
                 </div>
-        </div>
+    </div>
   )
 }

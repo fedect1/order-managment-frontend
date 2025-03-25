@@ -15,7 +15,7 @@ export const dataSiloSummary = [
         SILO_CHARGE: "ARG-02",
         SILO_CAPACITY: 5000,
         RAWMAT_NAME: "PR2",
-        RAWMAT_RAWTYP: "Recicle"
+        RAWMAT_RAWTYP: "Cosas"
     },
     {
         SILO_SILO: 3,
