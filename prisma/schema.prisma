@@ -209,7 +209,6 @@ model t_ng_orders {
   @@index([linea_id], map: "IDX_ORDERS_LINEA_ID")
   @@index([status], map: "IDX_ORDERS_STATUS")
   @@index([sequence_number], map: "IDX_ORDERS_SEQUENCE")
-  @@unique([linea_id, sequence_number], map: "UNQ_LINE_SEQUENCE") // Garantiza secuencia única por línea
 }
 
 // Tabla de Componentes
