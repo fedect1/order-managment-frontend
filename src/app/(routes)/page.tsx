@@ -1,5 +1,5 @@
-import LastCustomers from "./components/LastCustomers/LastCustomers";
-import SalesDistributors from './components/SalesDistributors/SalesDistributors';
+// import LastCustomers from "./components/LastCustomers/LastCustomers";
+// import SalesDistributors from './components/SalesDistributors/SalesDistributors';
 import { dataLineSummary } from "./components/LineSummary/LineSummary.data";
 import { LineSummary } from "./components/LineSummary";
 
@@ -27,10 +27,10 @@ export default function Home() {
           ))
         }
       </div>
-      <div className="grid grid-cols-1 xl:grid-cols-2 md:gap-x-10 mt-12">
+      {/* <div className="grid grid-cols-1 xl:grid-cols-2 md:gap-x-10 mt-12">
         <LastCustomers />
         <SalesDistributors />
-      </div>
+      </div> */}
     </div>
   );
 }
