@@ -15,7 +15,7 @@ export function SidebarRoutes() {
                 ))}
             </div>
 
-            <Separator/>
+            {/* <Separator/>
 
             <div className="p-2 md:p-6">
                 <p className="text-slate-500 mb-2">Tools</p>
@@ -24,7 +24,7 @@ export function SidebarRoutes() {
                 ))}
             </div>
 
-            <Separator/>
+            <Separator/> */}
 
 
         </div>

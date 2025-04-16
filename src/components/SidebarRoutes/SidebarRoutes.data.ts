@@ -4,7 +4,6 @@ import {
     PanelsTopLeft,
     CircleHelpIcon,
     Calendar,
-    Container,
     Box,
     Cog
 } from 'lucide-react'
@@ -30,11 +29,11 @@ export const dataGeneralSidebar = [
         label: "Recipes",
         href: "/recipes"
     },
-    {
-        icon: Container,
-        label: "Charge Assignment",
-        href: "/charges"
-    },
+//     {
+//         icon: Container,
+//         label: "Charge Assignment",
+//         href: "/charges"
+//     },
 ]
 
 export const dataToolsSidebar = [
