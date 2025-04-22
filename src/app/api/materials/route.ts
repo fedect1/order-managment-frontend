@@ -1,14 +1,14 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from 'next/server';
 
-// Interfaz para material
-interface Material {
-  RAWMAT_RAWMAT: number;
-  RAWMAT_SHORT: string;
-  RAWMAT_NAME: string;
-  // Otros campos opcionales
-  [key: string]: any;
-}
+// // Interfaz para material
+// interface Material {
+//   RAWMAT_RAWMAT: number;
+//   RAWMAT_SHORT: string;
+//   RAWMAT_NAME: string;
+//   // Otros campos opcionales
+//   [key: string]: any;
+// }
 
 export async function GET(request: Request) {
   try {

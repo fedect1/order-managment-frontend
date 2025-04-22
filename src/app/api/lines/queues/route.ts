@@ -1,10 +1,10 @@
 // src/app/api/lines/queues/route.ts
-import { NextRequest, NextResponse } from 'next/server';
+import {  NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { OrderStatus } from '@prisma/client';
 
 // Obtener todas las líneas con sus órdenes en cola
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // 1. Obtener todas las líneas activas
     const lines = await prisma.t_line.findMany({

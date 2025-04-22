@@ -43,7 +43,7 @@ export async function PATCH(request: NextRequest) {
     });
     
     // Wait for all updates to complete
-    const results = await Promise.all(updatePromises);
+    await Promise.all(updatePromises);
     
     // Return successful response with updated items
     return NextResponse.json({

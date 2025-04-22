@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -54,19 +54,19 @@ export default function RecipesPage() {
   const [error, setError] = useState<string | null>(null);
 
   // Función para cargar las recetas
-  const loadRecipes = async (page = 1, search = '') => {
+  const loadRecipes = useCallback(async (page = 1, search = '') => {
     try {
       setLoading(true);
       setError(null);
-
+  
       const response = await fetch(
         `/api/recipes?page=${page}&limit=${pagination.limit}&search=${encodeURIComponent(search)}`
       );
-
+  
       if (!response.ok) {
         throw new Error('Failed to fetch recipes');
       }
-
+  
       const data = await response.json();
       setRecipes(data.recipes);
       setPagination(data.pagination);
@@ -76,7 +76,7 @@ export default function RecipesPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [pagination.limit]);
 
   // Cargar recetas al inicio y cuando cambian los parámetros
   useEffect(() => {
@@ -85,7 +85,7 @@ export default function RecipesPage() {
     
     setSearchTerm(search);
     loadRecipes(page, search);
-  }, [searchParams]);
+  }, [searchParams, loadRecipes]);
 
   // Función para manejar la búsqueda
   const handleSearch = (e: React.FormEvent) => {
