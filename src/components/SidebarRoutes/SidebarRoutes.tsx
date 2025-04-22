@@ -2,7 +2,7 @@
 
 import { SidebarItem } from "../SidebarItem"
 import { Separator } from "@/components/ui/separator"
-import { dataGeneralSidebar, dataToolsSidebar} from "./SidebarRoutes.data"
+import { dataGeneralSidebar} from "./SidebarRoutes.data"
 import { Button } from "@/components/ui/button"
 export function SidebarRoutes() {
   return (
