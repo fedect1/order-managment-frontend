@@ -24,16 +24,16 @@ export function HeaderMaterial({ rawTypes }: HeaderMaterialProps) {
   
   return (
     <div className="flex items-center justify-between">
-      <h2 className="text-2xl">List of materials</h2>
+      <h2 className="text-2xl">Lista materiałów</h2>
       <Dialog open={openModalCreate} onOpenChange={setOpenModalCreate}>
         <DialogTrigger asChild>
-          <Button>Create material</Button>
+          <Button>Utwórz materiał</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[625px]">
           <DialogHeader>
-            <DialogTitle>Create Material</DialogTitle>
+            <DialogTitle>Utwórz materiał</DialogTitle>
             <DialogDescription>
-              Create and configure your new material
+            Utwórz i skonfiguruj nowy materiał
             </DialogDescription>
           </DialogHeader>
           

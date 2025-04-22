@@ -2,7 +2,7 @@ export const dataLineSummary = [
     {
         line: "L1",
         color: "#8884d8",
-        status: "Running",
+        status: "Uruchomione",
         lastOrder: "AC370",
         currentOrder: "AC380",
         followingOrder: "AC390",
@@ -23,7 +23,7 @@ export const dataLineSummary = [
     {
         line: "L2",
         color: "#d88a84",
-        status: "Running",
+        status: "Uruchomione",
         lastOrder: "BC470",
         currentOrder: "BC480",
         followingOrder: "BC490",
@@ -44,7 +44,7 @@ export const dataLineSummary = [
     {
         line: "L3",
         color: "#84d88a",
-        status: "Running",
+        status: "Uruchomione",
         lastOrder: "DF120",
         currentOrder: "DF130",
         followingOrder: "DF140",
@@ -65,7 +65,7 @@ export const dataLineSummary = [
     {
         line: "L4",
         color: "#8ad8d8",
-        status: "Stopped",
+        status: "Zatrzymane",
         lastOrder: "GH210",
         currentOrder: "GH220",
         followingOrder: "GH230",
@@ -86,7 +86,7 @@ export const dataLineSummary = [
     {
         line: "L5",
         color: "#d88ad8",
-        status: "Running",
+        status: "Uruchomione",
         lastOrder: "JK750",
         currentOrder: "JK760",
         followingOrder: "JK770",
@@ -107,7 +107,7 @@ export const dataLineSummary = [
     {
         line: "L6",
         color: "#d8d84a",
-        status: "Paused",
+        status: "Wstrzymane",
         lastOrder: "MN540",
         currentOrder: "MN550",
         followingOrder: "MN560",

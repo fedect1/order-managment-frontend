@@ -42,7 +42,7 @@ export default async function OrdersPage() {
     <div>
         <div>
           <HeaderOrders lineList={ lineList } recipeList={ recipeList }/>
-          <p>List of orders</p>
+          <p>Lista zamówień</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-x-20">
           {

@@ -106,7 +106,7 @@ export function FormCreateOrder(props: FormCreateOrderProps) {
             name="job_number"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Order/job number</FormLabel>
+                <FormLabel>Numer zamówienia/zadania</FormLabel>
                 <FormControl>
                   <Input placeholder="JOB-20250306-A" type="text" {...field} />
                 </FormControl>
@@ -119,7 +119,7 @@ export function FormCreateOrder(props: FormCreateOrderProps) {
             name="product_number"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Product or article number</FormLabel>
+                <FormLabel>Numer produktu lub artykułu</FormLabel>
                 <FormControl>
                   <Input placeholder="PROD-5678" type="text" {...field} />
                 </FormControl>
@@ -132,7 +132,7 @@ export function FormCreateOrder(props: FormCreateOrderProps) {
             name="quantity_kg"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Total product quantity in kg</FormLabel>
+                <FormLabel>Ogólna ilość produktu w kg</FormLabel>
                 <FormControl>
                   <Input 
                     placeholder="500" 
@@ -155,7 +155,7 @@ export function FormCreateOrder(props: FormCreateOrderProps) {
             name="consumption_kg_h"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Production speed in kg/h</FormLabel>
+                <FormLabel>Prędkość produkcyjna w kg/h</FormLabel>
                 <FormControl>
                   <Input 
                     placeholder="25.55" 
@@ -178,7 +178,7 @@ export function FormCreateOrder(props: FormCreateOrderProps) {
             name="pml_target_g_m"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Target weight per meter of film in g/m</FormLabel>
+                <FormLabel>Zadana wartość gramatury folii w g/m</FormLabel>
                 <FormControl>
                   <Input 
                     placeholder="18.75" 
@@ -201,7 +201,7 @@ export function FormCreateOrder(props: FormCreateOrderProps) {
             name="width_mm"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Gross width in mm</FormLabel>
+                <FormLabel>Szerokość brutto w mm</FormLabel>
                 <FormControl>
                   <Input 
                     placeholder="600" 
@@ -223,7 +223,7 @@ export function FormCreateOrder(props: FormCreateOrderProps) {
             name="gusset_mm"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Gusset size [mm]</FormLabel>
+                <FormLabel>Rozmiar fałdu [mm]</FormLabel>
                 <FormControl>
                   <Input 
                     placeholder="100" 
@@ -245,7 +245,7 @@ export function FormCreateOrder(props: FormCreateOrderProps) {
             name="linea_id"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Assigned line identifier</FormLabel>
+                <FormLabel>Przypisany identyfikator linii</FormLabel>
                 <Select
                   onValueChange={(value) => field.onChange(parseInt(value))}
                   value={field.value?.toString() || "0"} // Asegurar que siempre haya un valor
@@ -272,7 +272,7 @@ export function FormCreateOrder(props: FormCreateOrderProps) {
             name="recipe_uuid"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Assigned Recipe</FormLabel>
+                <FormLabel>Przypisana receptura</FormLabel>
                 <Select
                   onValueChange={(value) => field.onChange(value)}
                   value={field.value || "none"} // Asegurar que siempre haya un valor
@@ -283,7 +283,7 @@ export function FormCreateOrder(props: FormCreateOrderProps) {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="none">No recipe</SelectItem>
+                    <SelectItem value="none">Brak receptury</SelectItem>
                     {recipeList.map((recipe) => (
                       <SelectItem key={recipe.RECIPE_UUID} value={recipe.RECIPE_UUID}>
                         {recipe.RECIPE_REZPNR_UNI}
@@ -304,13 +304,13 @@ export function FormCreateOrder(props: FormCreateOrderProps) {
             onClick={() => setOpenModalCreate(false)}
             disabled={isSubmitting}
           >
-            Cancel
+            Anuluj
           </Button>
           <Button 
             type="submit" 
             disabled={!isValid || isLoading}
           >
-            {isLoading ? "Creating..." : "Submit"}
+            {isLoading ? "Creating..." : "Prześlij"}
           </Button>
         </div>
       </form>

@@ -27,16 +27,16 @@ export function HeaderOrders({lineList, recipeList}:HeaderOrderProps) {
   const[openModalCreate, setOpenModalCreate] = useState(false)
   return (
     <div className="flex items-center justify-between">
-      <h2 className="text-2xl">List of Orders</h2>
+      <h2 className="text-2xl">Lista zamówień</h2>
       <Dialog open={openModalCreate} onOpenChange={setOpenModalCreate}>
         <DialogTrigger asChild>
-          <Button>Create Order</Button>
+          <Button>Utwórz zamówienie</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[625px]">
           <DialogHeader>
-              <DialogTitle>Create Order</DialogTitle>
+              <DialogTitle>Utwórz zamówienie</DialogTitle>
               <DialogDescription>
-                Create and configure your Order
+              Utwórz i skonfiguruj swoje zamówienie
               </DialogDescription>
           </DialogHeader>
 

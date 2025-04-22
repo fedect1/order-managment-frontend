@@ -59,7 +59,7 @@ export function DataTable<TData, TValue> ({
         <div className="p-4 bg-background shadow-md rounded-lg mt-4">
             <div className="flex items-center mb-2">
                 <Input 
-                    placeholder="Filter the Type..."
+                    placeholder="Filtruj typ..."
                     value={(table.getColumn("RAWTYP_RAWTYP")?.getFilterValue() as string) ?? ""}
                     onChange={(event) => table.getColumn("RAWTYP_RAWTYP")?.setFilterValue(event.target.value)}
                 />
@@ -110,10 +110,10 @@ export function DataTable<TData, TValue> ({
             </div>
             <div className="flext items-center justify-end space-x-2 py-4">
                 <Button variant="outline" size="sm" onClick={()=>table.previousPage()} disabled={!table.getCanPreviousPage()}>
-                    Previous
+                    Poprzednie
                 </Button>
                 <Button variant="outline" size="sm" onClick={()=>table.nextPage()} disabled={!table.getCanNextPage()}>
-                    Next
+                    Następne
                 </Button>
             </div>
         </div>

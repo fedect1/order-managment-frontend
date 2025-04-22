@@ -23,7 +23,7 @@ async function getCurrentOrder(lineId: number) {
 }
 
 export async function CardOrderLine({line, color, id}: LineData) {
-  let orderNumber = 'No active order';
+  let orderNumber = 'Brak aktywnego zamówienia';
   
   if (id) {
     const currentOrder = await getCurrentOrder(id);
@@ -47,7 +47,7 @@ export async function CardOrderLine({line, color, id}: LineData) {
         </div>
         <div className="flex items-center gap-2">
           <h4 className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
-            Current Order:
+            Aktualne zamówienie:
           </h4>
           <span className="font-bold text-sm text-gray-800 dark:text-gray-200">
             {orderNumber}

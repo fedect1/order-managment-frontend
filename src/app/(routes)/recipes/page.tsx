@@ -191,10 +191,10 @@ export default function RecipesPage() {
     <div className="container mx-auto py-8">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle className="text-2xl">Recipes</CardTitle>
+          <CardTitle className="text-2xl">Receptury</CardTitle>
           <Link href="/recipes/create-new">
             <Button>
-              <Plus className="mr-2 h-4 w-4" /> New Recipe
+              <Plus className="mr-2 h-4 w-4" /> Nowa receptura
             </Button>
           </Link>
         </CardHeader>
@@ -205,13 +205,13 @@ export default function RecipesPage() {
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
               <Input
                 type="search"
-                placeholder="Search recipes..."
+                placeholder="Szukaj receptury..."
                 className="pl-8"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <Button type="submit">Search</Button>
+            <Button type="submit">Szukaj</Button>
           </form>
 
           {/* Mensaje de error */}
@@ -234,9 +234,9 @@ export default function RecipesPage() {
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead className="w-[200px]">Name</TableHead>
-                        <TableHead>Components</TableHead>
-                        <TableHead className="text-right">Actions</TableHead>
+                        <TableHead className="w-[200px]">Nazwa</TableHead>
+                        <TableHead>Składniki</TableHead>
+                        <TableHead className="text-right">Akcje</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>

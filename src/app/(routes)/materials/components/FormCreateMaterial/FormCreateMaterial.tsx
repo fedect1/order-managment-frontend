@@ -111,7 +111,7 @@ export function FormCreateMaterial(props: FormCreateMaterialProps) {
             name="RAWMAT_NAME"
             render={({ field }) => (
                 <FormItem>
-                <FormLabel>Code *</FormLabel>
+                <FormLabel>Kod *</FormLabel>
                 <FormControl>
                     <Input placeholder="Polycol..." type="text" {...field} />
                 </FormControl>
@@ -124,7 +124,7 @@ export function FormCreateMaterial(props: FormCreateMaterialProps) {
             name="RAWMAT_SHORT"
             render={({ field }) => (
                 <FormItem>
-                <FormLabel>Material *</FormLabel>
+                <FormLabel>Materiał *</FormLabel>
                 <FormControl>
                     <Input placeholder="B.D. POLYAIR BIANC..." type="text" {...field} />
                 </FormControl>
@@ -137,7 +137,7 @@ export function FormCreateMaterial(props: FormCreateMaterialProps) {
             name="RAWMAT_DENSITY"
             render={({ field }) => (
                 <FormItem>
-                <FormLabel>Density g/ccm *</FormLabel>
+                <FormLabel>Gęstość g/cm³ *</FormLabel>
                 <FormControl>
                     <Input type="number" min={0} step={0.001} {...field} />
                 </FormControl>
@@ -150,7 +150,7 @@ export function FormCreateMaterial(props: FormCreateMaterialProps) {
             name="RAWMAT_MFIVAL"
             render={({ field }) => (
                 <FormItem>
-                <FormLabel>MFI g/10 min</FormLabel>
+                <FormLabel>Wartość MFI</FormLabel>
                 <FormControl>
                     <Input type="number" min={0} step={0.001} {...field} />
                 </FormControl>
@@ -163,7 +163,7 @@ export function FormCreateMaterial(props: FormCreateMaterialProps) {
             name="RAWMAT_BULKDENS"
             render={({ field }) => (
                 <FormItem>
-                <FormLabel>Density Bulk</FormLabel>
+                <FormLabel>Gęstość nasypowa</FormLabel>
                 <FormControl>
                     <Input type="number" min={0} step={0.001} {...field} />
                 </FormControl>
@@ -176,7 +176,7 @@ export function FormCreateMaterial(props: FormCreateMaterialProps) {
                 name="RAWMAT_RAWTYP"
                 render={({ field }) => (
                     <FormItem>
-                    <FormLabel>Type *</FormLabel>
+                    <FormLabel>Typ *</FormLabel>
                     <Select
                         onValueChange={(value: string) => field.onChange(Number(value))}
                         defaultValue={String(field.value)}
@@ -204,7 +204,7 @@ export function FormCreateMaterial(props: FormCreateMaterialProps) {
             name="RAWMAT_ARTN"
             render={({ field }) => (
                 <FormItem>
-                <FormLabel>Article</FormLabel>
+                <FormLabel>Artykuł</FormLabel>
                 <FormControl>
                     <Input placeholder="POLYAIR..." type="text" {...field} />
                 </FormControl>
@@ -217,7 +217,7 @@ export function FormCreateMaterial(props: FormCreateMaterialProps) {
             name="RAWMAT_COLOR"
             render={({ field }) => (
                 <FormItem>
-                <FormLabel>Color *</FormLabel>
+                <FormLabel>Kolor *</FormLabel>
                 <Select
                     onValueChange={(value: string) => field.onChange(Number(value))}
                     defaultValue={String(field.value)}
@@ -251,7 +251,7 @@ export function FormCreateMaterial(props: FormCreateMaterialProps) {
             />
 
         </div>
-        <Button type="submit" disabled={!isValid}>Submit</Button>
+        <Button type="submit" disabled={!isValid}>Prześlij</Button>
       </form>
     </Form>
   )

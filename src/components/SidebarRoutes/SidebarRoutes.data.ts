@@ -11,22 +11,22 @@ import {
 export const dataGeneralSidebar = [
     {
         icon: PanelsTopLeft,
-        label: "Overview",
+        label: "Ogólne",
         href: "/"
     },
     {
         icon: Building2,
-        label: "Orders",
+        label: "Przegląd",
         href: "/orders"
     },
     {
         icon: Box,
-        label: "Materials",
+        label: "Zamówienia",
         href: "/materials"
     },
     {
         icon: Cog,
-        label: "Recipes",
+        label: "Receptury",
         href: "/recipes"
     },
 //     {

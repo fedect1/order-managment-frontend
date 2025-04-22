@@ -20,10 +20,10 @@ export function HeaderType() {
   const[openModalCreate, setOpenModalCreate] = useState(false)
   return (
     <div className="flex items-center justify-between">
-      <h2 className="text-2xl">Types</h2>
+      <h2 className="text-2xl">Typy</h2>
       <Dialog open={openModalCreate} onOpenChange={setOpenModalCreate}>
         <DialogTrigger asChild>
-          <Button>New Type</Button>
+          <Button>Nowy typ</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[625px]">
           <DialogHeader>

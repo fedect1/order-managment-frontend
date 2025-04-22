@@ -10,7 +10,7 @@ export function Logo() {
 
         <Image src="/logo.png" alt="Logo" width={70} height={50} priority className="dark:invert"/>
 
-        <h1 className="font-bold text-xl">Order manager</h1>
+        <h1 className="font-bold text-xl">Menedżer zamówień</h1>
     </div>
   )
 }

@@ -19,7 +19,7 @@ export const columns: ColumnDef<RawType>[] = [
         header: ({ column }) => {
             return (
                 <Button variant="ghost" className="m-0 p-0 flex items-center" onClick={ () => column.toggleSorting(column.getIsSorted()==="desc")}>
-                    Key
+                    Klucz
                     <ArrowUpDown className="w-4 h-4"/>
                 </Button>
             )
@@ -27,15 +27,15 @@ export const columns: ColumnDef<RawType>[] = [
     },
     {
         accessorKey: "RAWTYP_SHORT",
-        header: "Name"
+        header: "Nazwa"
     },
     {
         accessorKey: "RAWTYP_DESC",
-        header: "Description"
+        header: "Opis"
     },
     {
         id: "actions",
-        header: "Actions",
+        header: "Działania",
         cell: ({ row }) => {
             const { RAWTYP_RAWTYP } = row.original
             return (
@@ -49,7 +49,7 @@ export const columns: ColumnDef<RawType>[] = [
                         <Link href={`/materials/type/${RAWTYP_RAWTYP}`}>
                             <DropdownMenuItem>
                                 <Pencil className="w-4 h-4 mr-2"/>
-                                Edit
+                                Akcje
                             </DropdownMenuItem>
                         </Link>
                     </DropdownMenuContent>

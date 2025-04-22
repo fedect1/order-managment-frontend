@@ -56,8 +56,8 @@ export function LineSummary(props: LineSummaryProps) {
         </div>
         <div className="flex items-center">
           <span className={`px-2 py-0.5 rounded-full text-xs font-medium 
-            ${status === "Running" ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200" : 
-              status === "Stopped" ? "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200" : 
+            ${status === "Uruchomione" ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200" : 
+              status === "Zatrzymane" ? "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200" : 
               "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200"}`}>
             {status}
           </span>
@@ -66,7 +66,7 @@ export function LineSummary(props: LineSummaryProps) {
       
       {/* Current Order */}
       <div className="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700 text-sm">
-        <p className="text-gray-600 dark:text-gray-400 font-medium">Current Order</p>
+        <p className="text-gray-600 dark:text-gray-400 font-medium">Aktualne zamówienie</p>
         <div className="flex items-center gap-1">
           <p className="font-semibold">{currentOrder}</p>
           {TooltipInfo && <CurrentOrderTooltip tooltipInfo={TooltipInfo} />}
@@ -75,14 +75,14 @@ export function LineSummary(props: LineSummaryProps) {
       
       {/* Throughput Section */}
       <div className="py-2 border-b border-gray-200 dark:border-gray-700">
-        <h3 className="font-medium text-sm mb-1 text-gray-700 dark:text-gray-300">Throughput</h3>
+        <h3 className="font-medium text-sm mb-1 text-gray-700 dark:text-gray-300">Wydajność</h3>
         <div className="grid grid-cols-2 gap-2">
           <div className="p-2 bg-gray-50 dark:bg-gray-900 rounded-lg">
-            <p className="text-xs text-gray-500 dark:text-gray-400">Target [kg/h]</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">Wartość zadana (kg/h)</p>
             <p className="font-semibold text-sm">{throughputTgt ?? '-'}</p>
           </div>
           <div className="p-2 bg-gray-50 dark:bg-gray-900 rounded-lg">
-            <p className="text-xs text-gray-500 dark:text-gray-400">Actual [kg/h]</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">Wartość aktualna (kg/h)</p>
             <p className={`font-semibold text-sm ${isThroughputOutOfRange ? "text-red-600 dark:text-red-400" : "text-green-600 dark:text-green-400"}`}>
               {throughputAct ?? '-'}
             </p>
@@ -92,14 +92,14 @@ export function LineSummary(props: LineSummaryProps) {
       
       {/* Amount Section */}
       <div className="py-2 border-b border-gray-200 dark:border-gray-700">
-        <h3 className="font-medium text-sm mb-1 text-gray-700 dark:text-gray-300">Amount</h3>
+        <h3 className="font-medium text-sm mb-1 text-gray-700 dark:text-gray-300">Ilość</h3>
         <div className="grid grid-cols-2 gap-2">
           <div className="p-2 bg-gray-50 dark:bg-gray-900 rounded-lg">
-            <p className="text-xs text-gray-500 dark:text-gray-400">Target [kg]</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">Wartość zadana (kg/h)</p>
             <p className="font-semibold text-sm">{amountTgt ?? '-'}</p>
           </div>
           <div className="p-2 bg-gray-50 dark:bg-gray-900 rounded-lg">
-            <p className="text-xs text-gray-500 dark:text-gray-400">Remainder [kg]</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">Pozostałość (kg)</p>
             <p className={`font-semibold text-sm ${getRemainderColor()}`}>
               {remainder.toFixed(1) ?? '-'}
             </p>
@@ -110,11 +110,11 @@ export function LineSummary(props: LineSummaryProps) {
       {/* Order Info */}
       <div className="grid grid-cols-2 gap-2 pt-2 text-sm">
         <div className="p-2 bg-gray-50 dark:bg-gray-900 rounded-lg">
-          <p className="text-xs text-gray-500 dark:text-gray-400">Last Order</p>
+          <p className="text-xs text-gray-500 dark:text-gray-400">Poprzednie zamówienie</p>
           <p className="font-semibold truncate">{lastOrder ?? '-'}</p>
         </div>
         <div className="p-2 bg-gray-50 dark:bg-gray-900 rounded-lg">
-          <p className="text-xs text-gray-500 dark:text-gray-400">Following Order</p>
+          <p className="text-xs text-gray-500 dark:text-gray-400">Następne zamówienie</p>
           <p className="font-semibold truncate">{followingOrder ?? '-'}</p>
         </div>
       </div>

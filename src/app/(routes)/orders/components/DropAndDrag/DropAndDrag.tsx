@@ -48,7 +48,7 @@ export function DropAndDrag({ id }: DropAndDragProps) {
             // Create a placeholder item for empty data
             setItems([{
               order_id: -1,
-              job_number: "No active orders found",
+              job_number: "Nie znaleziono aktywnych zamówień",
               product_number: "",
               quantity_kg: 0,
               linea_id: id,

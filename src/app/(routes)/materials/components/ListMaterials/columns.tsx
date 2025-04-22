@@ -19,7 +19,7 @@ const decimalToHex = (decimal: bigint | number): string => {
 export const columns: ColumnDef<t_rawmat>[] = [
     {
         accessorKey: "RAWMAT_COLOR",
-        header: "Color",
+        header: "Kolor",
         cell: ({ row }) => {
             const colorValue = row.original.RAWMAT_COLOR;
             const hexColor = decimalToHex(colorValue);
@@ -39,7 +39,7 @@ export const columns: ColumnDef<t_rawmat>[] = [
         header: ({ column }) => {
             return (
                 <Button variant="ghost" className="m-0 p-0 flex items-center" onClick={ () => column.toggleSorting(column.getIsSorted()==="desc")}>
-                    Key
+                    Klucz
                     <ArrowUpDown className="w-4 h-4 ml-2"/>
                 </Button>
             )
@@ -47,31 +47,31 @@ export const columns: ColumnDef<t_rawmat>[] = [
     },
     {
         accessorKey: "RAWMAT_NAME",
-        header: "Name"
+        header: "Nazwa"
     },
     {
         accessorKey: "RAWMAT_DENSITY",
-        header: "Density gcm"
+        header: "Gęstość g/cm³"
     },
     {
         accessorKey: "RAWMAT_MFIVAL",
-        header: "MFI"
+        header: "Wartość MFI"
     },
     {
         accessorKey: "RAWMAT_BULKDENS",
-        header: "Bulk Density"
+        header: "Gęstość nasypowa"
     },
     {
         accessorKey: "RAWMAT_RAWTYP",
-        header: "Type"
+        header: "Typ"
     },
     {
         accessorKey: "RAWMAT_ARTN",
-        header: "Article"
+        header: "Artykuł"
     },
     {
         id: "actions",
-        header: "Actions",
+        header: "Akcje",
         cell: ({ row }) => {
             const { RAWMAT_RAWMAT } = row.original
             return (
