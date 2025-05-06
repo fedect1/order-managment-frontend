@@ -1,16 +1,20 @@
-import { NextRequest, NextResponse } from 'next/server';
-import prisma from '@/lib/prisma';
+// src/app/api/lines/[id]/reorder/route.ts
+import prisma from "@/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
 
-// Estructura correcta para rutas de API en Next.js App Router
-export async function POST(
-  request: NextRequest, 
-  { params }: { params: { id: string } } // Formato correcto para los parámetros
-) {
+// Definir el tipo correcto para los parámetros de ruta
+type RouteContext = {
+  params: Promise<{ id: string }>
+};
+
+export async function POST(req: NextRequest, { params }: RouteContext) {
   try {
-    const lineId = params.id; // Obtener el ID desde los parámetros
-    const body = await request.json();
+    const resolvedParams = await params;
+    const { id } = resolvedParams;
     
-    // Obtener los elementos reordenados del cuerpo
+    const lineId = id; // No necesitas parseInt si lo vas a usar como string
+    const body = await req.json();
+    
     const { reorderedItems } = body;
     
     if (!reorderedItems || !Array.isArray(reorderedItems)) {
@@ -20,14 +24,13 @@ export async function POST(
       );
     }
     
-    // Actualizar el orden de los elementos
     const updatePromises = reorderedItems.map(async (item, index) => {
       if (item.order_id === -1) return null;
       
       return prisma.t_ng_orders.update({
         where: {
           order_id: item.order_id,
-          linea_id: parseInt(lineId) // Asegúrate de que lineId sea del tipo correcto
+          linea_id: parseInt(lineId) // Aquí sí necesitas parseInt
         },
         data: {
           sequence_number: index + 1
@@ -35,14 +38,19 @@ export async function POST(
       });
     });
     
-    // Esperar a que todas las actualizaciones se completen
     await Promise.all(updatePromises);
     
-    // Devolver respuesta exitosa
+    // Convertir cualquier BigInt a String para evitar problemas de serialización
+    const safeData = JSON.parse(
+      JSON.stringify(reorderedItems, (_, value) =>
+        typeof value === "bigint" ? value.toString() : value
+      )
+    );
+    
     return NextResponse.json({
       success: true,
       message: 'Order sequence updated successfully',
-      data: reorderedItems
+      data: safeData
     });
   } catch (error) {
     console.error('Error updating order sequence:', error);
