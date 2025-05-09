@@ -9,7 +9,8 @@ export function SidebarRoutes() {
     <div className="flex flex-col justify-between">
         <div>
             <div className="p-2 md:p-6">
-                <p className="text-slate-500 mb-2">General</p>
+                {/* <p className="text-slate-500 mb-2">General</p> */}
+                <p className="text-slate-500 mb-2">Ogólne</p>
                 {dataGeneralSidebar.map((item)=>(
                     <SidebarItem key={item.label} item={item}/>
                 ))}

@@ -11,7 +11,7 @@ import {
 export const dataGeneralSidebar = [
     {
         icon: PanelsTopLeft,
-        label: "Ogólne",
+        label: "Przegląd",
         href: "/"
     },
     {
