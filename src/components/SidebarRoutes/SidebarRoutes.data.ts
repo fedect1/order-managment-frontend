@@ -16,12 +16,12 @@ export const dataGeneralSidebar = [
     },
     {
         icon: Building2,
-        label: "Przegląd",
+        label: "Zamówienia",
         href: "/orders"
     },
     {
         icon: Box,
-        label: "Zamówienia",
+        label: "Materiały",
         href: "/materials"
     },
     {
